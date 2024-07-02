@@ -17,7 +17,7 @@ public class CodeExecutionController {
     private CodeExecutionService codeExecutionService;
 
     @PostMapping("/execute")
-    public CodeResult executeCode(@RequestBody CodeRequest codeRequest) {
+    public CodeResult    executeCode(@RequestBody CodeRequest codeRequest) {
         String language = codeRequest.getLanguage();
         String code = codeRequest.getCode();
         String input = codeRequest.getInput();
