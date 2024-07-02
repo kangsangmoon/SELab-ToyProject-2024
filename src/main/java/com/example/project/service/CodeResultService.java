@@ -34,7 +34,9 @@ public class CodeResultService {
             codeResult.setId(id);
         } else {
             jdbcTemplate.update(
-                    "UPDATE code_result SET output = ?, is_correct = ? WHERE id = ?",
+                    "UPDATE code_result " +
+                            "SET output = ?, is_correct = ? " +
+                            "WHERE id = ?",
                     codeResult.getOutput(), codeResult.isCorrect(), codeResult.getId()
             );
         }
@@ -42,10 +44,17 @@ public class CodeResultService {
     }
 
     public List<CodeResult> findAll() {
-        return jdbcTemplate.query("SELECT * FROM code_result", rowMapper);
+        return jdbcTemplate.query(
+                "SELECT * " +
+                        "FROM code_result",
+                rowMapper);
     }
 
     public CodeResult findById(Long id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM code_result WHERE id = ?", new Object[]{id}, rowMapper);
+        return jdbcTemplate.queryForObject(
+                "SELECT * " +
+                        "FROM code_result " +
+                        "WHERE id = ?",
+                new Object[]{id}, rowMapper);
     }
 }
