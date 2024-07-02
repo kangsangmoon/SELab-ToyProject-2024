@@ -16,15 +16,12 @@ public class CodeResultService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private final RowMapper<CodeResult> rowMapper = new RowMapper<CodeResult>() {
-        @Override
-        public CodeResult mapRow(ResultSet rs, int rowNum) throws SQLException {
-            CodeResult codeResult = new CodeResult();
-            codeResult.setId(rs.getLong("id"));
-            codeResult.setOutput(rs.getString("output"));
-            codeResult.setCorrect(rs.getBoolean("is_correct"));
-            return codeResult;
-        }
+    private final RowMapper<CodeResult> rowMapper = (rs, rowNum) -> {
+        CodeResult codeResult = new CodeResult();
+        codeResult.setId(rs.getLong("id"));
+        codeResult.setOutput(rs.getString("output"));
+        codeResult.setCorrect(rs.getBoolean("is_correct"));
+        return codeResult;
     };
 
     public CodeResult save(CodeResult codeResult) {
