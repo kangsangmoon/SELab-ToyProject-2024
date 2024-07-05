@@ -17,7 +17,9 @@ public class CCodeExecutorService {
             writer.write(cCode);
         }
 
-        ProcessBuilder compileBuilder = new ProcessBuilder("gcc", sourceFile.getAbsolutePath(), "-o", sourceFile.getAbsolutePath() + ".out");
+        ProcessBuilder compileBuilder = new ProcessBuilder("gcc",
+                sourceFile.getAbsolutePath(), "-o",
+                sourceFile.getAbsolutePath() + ".out");
         Process compileProcess = compileBuilder.start();
         compileProcess.waitFor();
 
@@ -31,10 +33,12 @@ public class CCodeExecutorService {
             return "Compilation Error:\n" + errorOutput.toString();
         }
 
-        ProcessBuilder executeBuilder = new ProcessBuilder(sourceFile.getAbsolutePath() + ".out");
+        ProcessBuilder executeBuilder =
+                new ProcessBuilder(sourceFile.getAbsolutePath() + ".out");
         Process executeProcess = executeBuilder.start();
 
-        BufferedReader outputReader = new BufferedReader(new InputStreamReader(executeProcess.getInputStream()));
+        BufferedReader outputReader =
+                new BufferedReader(new InputStreamReader(executeProcess.getInputStream()));
         StringBuilder output = new StringBuilder();
         String line;
         while ((line = outputReader.readLine()) != null) {
