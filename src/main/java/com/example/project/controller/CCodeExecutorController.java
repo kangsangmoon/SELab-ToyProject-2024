@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
-@RestController("/api/ccode")
+@RestController
+@RequestMapping("/api/ccode")
 public class CCodeExecutorController {
 
     @Autowired

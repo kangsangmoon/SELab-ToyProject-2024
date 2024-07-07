@@ -5,7 +5,8 @@ import com.example.project.service.JavaCodeExecutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/api/execute")
+@RestController
+@RequestMapping("/api/execute")
 public class JavaCodeExecutorController {
 
     @Autowired
