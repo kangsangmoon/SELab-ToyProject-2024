@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/signin_page.css}">
+    <link rel="icon" th:href="@{/favicon.ico}">
+    <title>로그인</title>
+</head>
+<body>
+<header>
+    <div class="header-background">
+        <a th:href="@{/main_page.html}"><img class="top-logo" th:src="${/LOgo.png}" alt=" 로고"></a>
+        <div class="loginbar">
+            <a th:href="@{/signin_page.html}">로그인</a> |
+            <a th:href="@{signup_page.html}">회원가입</a>
+        </div>
+        <nav>
+            <section>
+                <a th:href="@{#}">문제</a>
+                <a th:href="@{#}">랭킹</a>
+            </section>
+        </nav>
+    </div>
+</header>
+<main>
+    <div class="signin_box_background">
+        <div>
+            <h1>로그인</h1>
+            <form class="singin" th:action="@{#}" th:object="${signinForm}" method="post">
+                <input type="text" th:field="*{userName}" placeholder="아이디" required>
+                <input type="password" th:field="*{password}" placeholder="비밀번호" required>
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>
