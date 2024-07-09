@@ -1,0 +1,53 @@
+*{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    text-decoration: underline;
+    color: black;
+}
+body{
+    margin: 0;
+}
+div>a>img{
+    width: 200px;
+    margin-left: 150px;
+}
+.loginbar {
+    float: right;
+}
+nav>section{
+    width: 70%;
+    position: relative;
+    bottom: 40px;
+    left: 600px;
+    font-size: 30px;
+}
+header>div>nav{
+    position: relative;
+    bottom: 30px;
+    border-top: 1px solid black;
+}
+section>a {
+    margin: 40px;
+}
+.signup-background{
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+div>form{
+    border: 1px solid   black;
+    width: 300px;
+    height: 400px;
+}
+form>input{
+    border-radius: 6px;
+    margin-top: 20px;
+    width: 280px;
+    height: 30px;
+}

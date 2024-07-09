@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>디지털 탐험대</title>
+    <link rel="stylesheet" th:href="@{/main_page.css}">
+    <link rel="stylesheet icon" th:href="@{/favicon.ico}">
+</head>
+<body>
+<header>
+    <div class="header-background">
+        <img class="top-logo" th:src="@{/Logo.png}" alt=" 로고">
+        <div class="loginbar">
+            <a th:href="@{/login_page.html}">로그인</a> |
+            <a th:href="@{/signup_page.html}">회원가입</a>
+        </div>
+        <nav>
+            <section>
+                <a th:href="@{#}">문제</a>
+                <a th:href="@{#}">랭킹</a>
+            </section>
+        </nav>
+    </div>
+</header>
+<main>
+    <div class="main-background">
+        <div>
+            <div class="site-description">
+                <h2>디지털 탐험대</h2>
+                <div class="description-line"> </div>
+                <p> 탐험대는 누구나 프로그래밍 문제를 풀고 채점받을 수 있는 곳입니다.</p>
+            </div>
+            <div class="other-information-background">
+                <div class="counters-problems">
+                    <h3>전체 문제</h3>
+                    <h2>11111</h2>
+                </div>
+                <div>
+                    <h3>채점 가능한 문제</h3>
+                    <h2>1111111</h2>
+                </div>
+                <div class="counters-language">
+                    <h3>채점 가능한 언어</h3>
+                    <h2>11111111</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <div class="footer-information">
+        <P >대표자: 소민섭</P>
+        <P>이메일:hanhsin.@hs.ac.kr</P>
+        <P>전화번호:010-1234-5678</P>
+    </div>
+</footer>
+</body>
+</html>
