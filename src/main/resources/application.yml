@@ -1,0 +1,20 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  datasource:
+    url:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password:
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 20
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
