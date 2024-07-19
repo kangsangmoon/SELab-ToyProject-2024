@@ -34,10 +34,10 @@ public class LoginController {
 
         if(loginUser.getId().equals("error")){
             model.addAttribute("idError","ID 가 틀렸습니다");
-            return "login_error_from";
+            return "login_error_form";
         }else if (loginUser.getPassword().equals("error")){
             model.addAttribute("passwordError", "Password 가 틀렸습니다");
-            return "login_error_from";
+            return "login_error_form";
         }
 
         Cookie cookie = cookieService.loginCookieMaker(id, password);

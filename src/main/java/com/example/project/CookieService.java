@@ -14,7 +14,7 @@ public class CookieService {
         String encryptPassword = encrypt(password);
 
         Cookie cookie = new Cookie("LoginCookie", encryptId + "||" + encryptPassword);
-        cookie.setMaxAge(10);
+        cookie.setMaxAge(1800);//쿠키 유지 시간 30분
 
         return cookie;
     }
