@@ -1,6 +1,6 @@
 package com.example.project.controller;
 
-import com.example.project.common.ResponseDto;
+import com.example.project.common.dto.ResponseDto;
 import com.example.project.dto.board.request.*;
 import com.example.project.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class BoardController {
 
     @PostMapping
     public ResponseEntity<?> register(@RequestBody BoardRegisterRequest request) {
-        var response = boardService.register(request);
+        var response = boardService.postRegistration(request);
 
         return ResponseDto.created(response);
     }

@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class BoardRegisterRequest {
-    private Long solutionId;
-    private Long userId;
     private String title;
     private String context;
+    private String userId;
+    private Long solutionId;
 }
