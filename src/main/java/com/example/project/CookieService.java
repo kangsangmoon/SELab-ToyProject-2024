@@ -1,7 +1,6 @@
 package com.example.project;
 
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 
 import java.security.MessageDigest;
@@ -10,7 +9,8 @@ import java.security.NoSuchAlgorithmException;
 @Service
 public class CookieService {
 
-    public Cookie loginCookieMaker(HttpServletResponse response, String id, String password) throws NoSuchAlgorithmException {
+    public Cookie loginCookieMaker(String id, String password) throws NoSuchAlgorithmException {
+
         String encryptId = encrypt(id);
         String encryptPassword = encrypt(password);
 
