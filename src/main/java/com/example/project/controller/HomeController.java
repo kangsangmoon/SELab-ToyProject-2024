@@ -15,6 +15,6 @@ public class HomeController {
 
         //model.addAttribute("name","kim");
 
-        return "main_page.html";
+        return "main_page";
     }
 }
