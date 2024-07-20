@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
     @GetMapping("/main")
-    public String mainPage(Model model){
+    public String mainPage(){
 
         //jsp
         //thymeleaf
 
-        model.addAttribute("name","kim");
+        //model.addAttribute("name","kim");
 
-        return "main_page";
+        return "main_page.html";
     }
 }

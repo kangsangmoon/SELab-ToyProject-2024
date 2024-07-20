@@ -17,12 +17,6 @@
             <a th:href="@{/signin_page.html}">로그인</a> |
             <a th:href="@{signup_page.html}">회원가입</a>
         </div>
-        <nav>
-            <section>
-                <a th:href="@{#}">문제</a>
-                <a th:href="@{#}">랭킹</a>
-            </section>
-        </nav>
     </div>
 </header>
 <main>
@@ -32,7 +26,7 @@
             <form class="singin" th:action="@{#}" th:object="${signinForm}" method="post">
                 <input type="text" th:field="*{userName}" placeholder="아이디" required>
                 <input type="password" th:field="*{password}" placeholder="비밀번호" required>
-                <input type="submit" value="Login">
+                <input type="submit" value="로그인">
             </form>
         </div>
     </div>
