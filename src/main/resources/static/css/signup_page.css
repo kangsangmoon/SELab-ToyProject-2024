@@ -19,18 +19,6 @@ div>a>img{
 .loginbar {
     float: right;
 }
-nav>section{
-    width: 70%;
-    position: relative;
-    bottom: 40px;
-    left: 600px;
-    font-size: 30px;
-}
-header>div>nav{
-    position: relative;
-    bottom: 30px;
-    border-top: 1px solid black;
-}
 .signup-background{
     display: flex;
     justify-content: center;
