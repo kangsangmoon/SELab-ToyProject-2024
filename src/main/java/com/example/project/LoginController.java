@@ -32,13 +32,10 @@ public class LoginController {
 
         User loginUser = loginService.login(id, password);
 
-        if (loginUser == null) {
+        if(loginUser.getId().equals("error")){
             model.addAttribute("idError","ID 가 틀렸습니다");
             return "login_error_form";
-        } else if ("error".equals(loginUser.getId())) {
-            model.addAttribute("idError","ID 가 틀렸습니다");
-            return "login_error_form";
-        } else if ("error".equals(loginUser.getPassword())) {
+        }else if (loginUser.getPassword().equals("error")){
             model.addAttribute("passwordError", "Password 가 틀렸습니다");
             return "login_error_form";
         }
