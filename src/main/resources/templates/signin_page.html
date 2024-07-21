@@ -23,9 +23,9 @@
     <div class="signin_box_background">
         <div>
             <h1>로그인</h1>
-            <form class="singin" th:action="@{signin_page}" th:object="${signinForm}" method="post">
-                <input type="text" th:field="*{userId}" placeholder="아이디" required>
-                <input type="password" th:field="*{password}" placeholder="비밀번호" required>
+            <form class="singin" th:action="@{/signin.do}" th:object="${signinForm}" method="post" id="loginForm">
+                <input type="text" th:field="*{userId}" placeholder="아이디" id="Id" required>
+                <input type="password" th:field="*{password}" placeholder="비밀번호" id="password" required>
                 <input type="submit" value="로그인">
             </form>
         </div>

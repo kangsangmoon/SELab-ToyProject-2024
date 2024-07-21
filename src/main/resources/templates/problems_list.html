@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>디지털 탐험대</title>
+    <link rel="stylesheet" th:href="@{css/problems_list.css}">
+    <link rel="stylesheet icon" th:href="@{img/favicon.ico}">
+</head>
+<body>
+    <table id="problemsTable">
+        <thead>
+        <tr>
+            <th>문제 번호</th>
+            <th>문제 제목</th>
+            <th>완료한 사람</th>
+            <th>정답 비율</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${problmesList}">
+            <td th:text="${problmes.number}">number</td>
+            <td th:text="${problmes.name}">name</td>
+            <td th:text="${problmes.complete}">complete</td>
+            <td th:text="${problmes.ratio}">ratio</td>
+        </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
