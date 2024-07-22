@@ -68,12 +68,12 @@ public class BoardService {
         return repository.findAll(pageable).map(BoardResponse::from);
     }
 
-    @Transactional(readOnly = true)
+    /*@Transactional(readOnly = true)
     public Page<BoardResponse> readSolutionBoard(Pageable pageable, BoardReadAllRequest request){
         return repository
                 .findBySolutionId(request.getSolutionId())
                 .map(BoardResponse::from);
-    }
+    }*/
 
     @Transactional
     public boolean delete(BoardDeleteRequest request) {

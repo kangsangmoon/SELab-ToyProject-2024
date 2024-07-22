@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SolutionRepository extends JpaRepository<Solution, Long> {
-    Page<Solution> findByDifficulty(Difficulty difficulty);
+    //Page<Solution> findByDifficulty(Difficulty difficulty);
 }

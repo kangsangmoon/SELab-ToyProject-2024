@@ -32,12 +32,12 @@ public class UserSolutionService {
         return SolutionResponse.from(solution);
     }
 
-    @Transactional(readOnly = true)
+   /* @Transactional(readOnly = true)
     public Page<SolutionResponse> findByDifficulty(DifficultyFindRequest request){
         return solutionRepository
                 .findByDifficulty(request.getDifficulty())
                 .map(SolutionResponse::from);
-    }
+    }*/
 
     //TODO 컴파일 부분 만들기
 }

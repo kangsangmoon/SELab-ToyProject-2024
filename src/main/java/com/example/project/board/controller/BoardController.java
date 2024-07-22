@@ -42,7 +42,7 @@ public class BoardController {
         return ResponseDto.ok(response);
     }
 
-    @GetMapping("/solution")
+    /*@GetMapping("/solution")
     public ResponseEntity<?> readSolutionBoard(
             @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
             BoardReadAllRequest request
@@ -50,7 +50,7 @@ public class BoardController {
         var response = boardService.readSolutionBoard(pageable, request);
 
         return PageDto.ok(response);
-    }
+    }*/
 
 
     @PutMapping

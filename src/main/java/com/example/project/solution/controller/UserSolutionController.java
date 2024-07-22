@@ -22,7 +22,7 @@ public class UserSolutionController {
 
     private final UserSolutionService service;
 
-    @GetMapping("/difficulty")
+    /*@GetMapping("/difficulty")
     public ResponseEntity<?> findByDifficulty
             (
                     @RequestBody DifficultyFindRequest request,
@@ -31,7 +31,7 @@ public class UserSolutionController {
         var byDifficulty = service.findByDifficulty(request);
 
         return PageDto.ok(byDifficulty);
-    }
+    }*/
 
     @PostMapping
     public ResponseEntity<?> compile(CompileRequest request){
