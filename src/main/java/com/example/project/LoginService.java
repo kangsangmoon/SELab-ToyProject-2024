@@ -17,7 +17,7 @@ public class LoginService {
 
     public User login(String id, String password) throws NoSuchAlgorithmException {
         if (repository.existsById(id)) {
-            User user = repository.findById(id).get();
+            User user = repository.findById(id).orElse(new User("error", null)); //ID가 일치하지 않음
             String encryptedPassword = encryptPassword(password);// 비밀번호 암호화해서 저장된 비밀번호와 비교
             if (user.getPassword().equals(encryptedPassword)) {
                 return user;

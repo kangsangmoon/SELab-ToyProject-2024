@@ -14,7 +14,7 @@ public class CookieService {
         String encryptId = encrypt(id);
         String encryptPassword = encrypt(password);
 
-        Cookie cookie = new Cookie("LoginCookie", encryptId + "||" + encryptPassword);
+        Cookie cookie = new Cookie("LoginCookie", String.format("%s||%s", encryptId, encryptPassword));
         cookie.setMaxAge(1800);//쿠키 유지 시간 30분
         cookie.setSecure(true);//HTTPS를 통해 쿠키가 전송되도록 함
         cookie.setHttpOnly(true);//자바스크립트를 통한 접근 방지
