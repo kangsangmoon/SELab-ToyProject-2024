@@ -23,11 +23,11 @@ public interface SolutionRepository extends JpaRepository<Solution, Long>, JpaSp
 
 
     //실행되는지 모름
-    public static Specification<Solution> findByDifficulty(String keyword) {
+    public static Specification<Solution> findByDifficulty(Difficulty difficulty) {
         return new Specification<Solution>() {
             @Override
             public Predicate toPredicate(Root<Solution> root, CriteriaQuery query, CriteriaBuilder cb) {
-                return cb.equal(root.get("country"),keyword);
+                return cb.equal(root.get("country"),difficulty.toString());
             }
         };
     }
