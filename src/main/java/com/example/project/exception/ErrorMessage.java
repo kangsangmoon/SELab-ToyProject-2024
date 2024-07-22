@@ -1,4 +1,4 @@
-package com.example.project.board.exception;
+package com.example.project.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ public enum ErrorMessage {
      * Todo Error Message
      */
     USER_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "User 정보를 찾을 수 없습니다."),
+    SOLUTION_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "Solution 정보를 찾을 수 없습니다"),
     BOARD_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "Board 정보를 찾을 수 없습니다")
     ;
 

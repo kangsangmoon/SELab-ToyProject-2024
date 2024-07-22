@@ -1,4 +1,4 @@
-package com.example.project.solution.exception;
+package com.example.project.exception;
 
 public class SolutionException extends BusinessException {
     public SolutionException() {

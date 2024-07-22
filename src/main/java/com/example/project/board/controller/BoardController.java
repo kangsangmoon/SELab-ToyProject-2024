@@ -2,7 +2,6 @@ package com.example.project.board.controller;
 
 import com.example.project.board.common.dto.PageDto;
 import com.example.project.board.common.dto.ResponseDto;
-import com.example.project.board.dto.board.request.*;
 import com.example.project.board.dto.request.*;
 import com.example.project.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +36,8 @@ public class BoardController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<?> readAll(BoardReadAllRequest request) {
-        var response = boardService.readAll(request);
+    public ResponseEntity<?> readAll(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        var response = boardService.readAll(pageable);
 
         return ResponseDto.ok(response);
     }

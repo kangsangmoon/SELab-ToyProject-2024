@@ -8,7 +8,7 @@ import com.example.project.solution.dto.request.admin.update.DifficultyUpdateReq
 import com.example.project.solution.dto.request.admin.update.ExampleUpdateRequest;
 import com.example.project.solution.dto.request.admin.update.UpdateRequest;
 import com.example.project.solution.entity.Solution;
-import com.example.project.solution.exception.SolutionException;
+import com.example.project.exception.SolutionException;
 import com.example.project.solution.repository.SolutionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
