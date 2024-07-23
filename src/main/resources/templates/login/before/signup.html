@@ -12,7 +12,7 @@
 <body>
 <header>
     <div class="header-background">
-        <a th:href="@{/main}"><img class="top-logo" th:src="${img/Logo.png}" alt=" 로고"></a>
+        <a th:href="@{/main}"><img class="top-logo" th:src="@{img/Logo.png}" alt=" 로고"></a>
         <div class="loginbar">
             <a th:href="@{/login}">로그인</a> |
             <a th:href="@{/signup}">회원가입</a>
@@ -23,7 +23,7 @@
     <div class="signup-background">
         <div>
             <h1>회원가입</h1>
-            <form th:action="@{/signup.do}" th:object="${signupForm}" method="post">
+            <form th:action="@{/signup}" th:object="${SignupForm}" method="post">
                 <label>아이디</label>
                 <input type="text" th:field="*{userId}" placeholder="아이디 입력" id="userId" required>
                 <label>비밀번호</label>
