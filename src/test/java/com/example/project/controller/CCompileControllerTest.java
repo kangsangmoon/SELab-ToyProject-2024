@@ -1,6 +1,7 @@
 package com.example.project.controller;
 
-import com.example.project.service.CCodeExecutorService;
+import com.example.project.compile.controller.CCompileController;
+import com.example.project.compile.service.CCompileService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -18,14 +19,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(CCodeExecutorController.class)
-class CCodeExecutorControllerTest {
+@WebMvcTest(CCompileController.class)
+class CCompileControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private CCodeExecutorService cCodeExecutorService;
+    private CCompileService cCompileService;
 
     @BeforeEach
     void setUp() {
@@ -36,7 +37,7 @@ class CCodeExecutorControllerTest {
     void testExecuteCCodeSuccess() throws Exception {
         String cCode = "#include <stdio.h>\nint main() { printf(\"Hello, World!\\n\"); return 0; }";
         String expectedOutput = "Hello, World!\n";
-        given(cCodeExecutorService.executeCCode(anyString())).willReturn(expectedOutput);
+        given(cCompileService.executeCCode(anyString())).willReturn(expectedOutput);
 
         mockMvc.perform(post("/api/ccode/execute")
                         .content(cCode)
@@ -48,7 +49,7 @@ class CCodeExecutorControllerTest {
     @Test
     void testExecuteCCodeFailure() throws Exception {
         String cCode = "#include <stdio.h>\nint main() { printf(\"Hello, World!\\n\" return 0; }";  // Syntax error
-        given(cCodeExecutorService.executeCCode(anyString())).willThrow(new IOException("Compilation Error"));
+        given(cCompileService.executeCCode(anyString())).willThrow(new IOException("Compilation Error"));
 
         mockMvc.perform(post("/api/ccode/execute")
                         .content(cCode)

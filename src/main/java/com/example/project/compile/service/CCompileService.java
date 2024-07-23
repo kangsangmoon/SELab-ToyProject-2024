@@ -1,4 +1,4 @@
-package com.example.project.service;
+package com.example.project.compile.service;
 
 import org.springframework.stereotype.Service;
 
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 @Service
-public class CCodeExecutorService {
+public class CCompileService {
 
     public String executeCCode(String cCode) throws IOException, InterruptedException {
 

@@ -1,6 +1,7 @@
 package com.example.project.controller;
 
-import com.example.project.service.JavaCodeExecutorService;
+import com.example.project.compile.controller.JavaCompileController;
+import com.example.project.compile.service.JavaCompileService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -15,14 +16,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
-@WebMvcTest(JavaCodeExecutorController.class)
-public class JavaCodeExecutorControllerTest {
+@WebMvcTest(JavaCompileController.class)
+public class JavaCompileControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private JavaCodeExecutorService executionService;
+    private JavaCompileService executionService;
 
     @BeforeEach
     void setUp() {

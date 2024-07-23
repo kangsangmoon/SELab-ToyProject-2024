@@ -1,4 +1,4 @@
-package com.example.project.service;
+package com.example.project.compile.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JavaCodeExecutorService {
+public class JavaCompileService {
 
     private static final String TEMP_CLASS_NAME = "TempClass";
     private static final String TEMP_FILE_NAME = TEMP_CLASS_NAME + ".java";
