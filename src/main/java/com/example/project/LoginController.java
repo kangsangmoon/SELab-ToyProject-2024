@@ -26,7 +26,7 @@ public class LoginController {
     }
 
     @PostMapping
-    public String login(HttpServletRequest request, HttpServletResponse response, Model model) throws NoSuchAlgorithmException {
+    public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
         String id = request.getParameter("id");
         String password = request.getParameter("password");
 
