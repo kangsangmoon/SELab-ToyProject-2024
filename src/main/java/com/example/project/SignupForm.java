@@ -10,4 +10,5 @@ public class SignupForm {
     private String repeatPassword;
     private String userName;
     private String email;
+    private String emailCheck;
 }

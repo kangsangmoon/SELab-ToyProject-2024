@@ -34,6 +34,8 @@
                 <input type="text" th:field="*{userName}" placeholder="이름입력" id="userName"required>
                 <label>이메일</label>
                 <input type="email" th:field="*{email}" placeholder="이메일 입력" id="email" required>
+                <button type="button">인증번호 받기</button>
+                <input type="text" th:field="*{emailCheck}" placeholder="인증번호 입력">
                 <input type="submit" value="회원가입">
             </form>
         </div>
