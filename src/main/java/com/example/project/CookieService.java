@@ -2,15 +2,13 @@ package com.example.project;
 
 import jakarta.servlet.http.Cookie;
 import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class CookieService {
 
     private final EncryptionService encryptionService;
-
-    public CookieService(EncryptionService encryptionService) {
-        this.encryptionService = encryptionService;
-    }
 
     public Cookie loginCookieMaker(String id, String password){
 
