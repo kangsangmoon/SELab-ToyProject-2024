@@ -3,26 +3,21 @@ package com.example.project.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfig {
 
-    private final UserDetailsService userService;
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login", "/signup", "/user").permitAll()
+                        .requestMatchers("/login", "/signup", "/api/user/signup", "/api/user/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -30,7 +25,7 @@ public class WebSecurityConfig {
                         .defaultSuccessUrl("/home")
                 )
                 .logout(logout -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutUrl("/api/user/logout")
                         .logoutSuccessUrl("/login")
                         .invalidateHttpSession(true)
                 )
@@ -40,15 +35,8 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userService);
-        provider.setPasswordEncoder(bCryptPasswordEncoder());
-        return provider;
-    }
-
-    @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
+
