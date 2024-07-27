@@ -9,13 +9,23 @@ import java.security.NoSuchAlgorithmException;
 public class EncryptionService {
 
     public String encrypt(String input) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(input.getBytes());
-            return bytesToHex(md.digest());
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+        MessageDigest md = null;
+        int retryCount = 0;
+        while (md == null && retryCount < 5) {
+            try {
+                md = MessageDigest.getInstance("SHA-256");
+            }catch (NoSuchAlgorithmException e){
+                System.err.println("Error: SHA-256 algorithm not found. Please check your JDK.");
+                System.out.println("Retrying...");
+                retryCount++;
+            }
         }
+        if (md == null) {
+            System.err.println("Error: SHA-256 algorithm not found. Please check your JDK.");
+            return "ERROR";
+        }
+        md.update(input.getBytes());
+        return bytesToHex(md.digest());
     }
 
     private String bytesToHex(byte[] bytes) {
