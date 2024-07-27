@@ -36,15 +36,15 @@
             <div class="other-information-background">
                 <div class="counters-problems">
                     <h3>전체 문제</h3>
-                    <h2>11111</h2>
+                    <h2><p th:text="${numberOfSolution}">전체 문제</p></h2>
                 </div>
                 <div>
                     <h3>채점 가능한 문제</h3>
-                    <h2>1111111</h2>
+                    <h2><p th:text="${ableToSolve}">체점 가능한 문제</p></h2>
                 </div>
                 <div class="counters-language">
                     <h3>채점 가능한 언어</h3>
-                    <h2>11111111</h2>
+                    <h2><p th:text="${ableToGrading}">채점 가능한 언어</p></h2>
                 </div>
             </div>
         </div>
