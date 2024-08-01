@@ -1,4 +1,4 @@
-package com.example.project.config;
+package com.example.project.common.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +17,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login", "/signup", "/api/user/signup", "/api/user/login").permitAll()
+                        .requestMatchers("/login","/signup", "/api/user/signup", "/api/user/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -31,6 +31,7 @@ public class WebSecurityConfig {
                 )
                 .csrf(csrf -> csrf.disable()); // CSRF 보호 비활성화
 
+
         return http.build();
     }
 
@@ -39,4 +40,3 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
-
