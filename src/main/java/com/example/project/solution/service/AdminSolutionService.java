@@ -7,8 +7,8 @@ import com.example.project.solution.dto.request.admin.update.ContextUpdateReques
 import com.example.project.solution.dto.request.admin.update.DifficultyUpdateRequest;
 import com.example.project.solution.dto.request.admin.update.ExampleUpdateRequest;
 import com.example.project.solution.dto.request.admin.update.UpdateRequest;
-import com.example.project.solution.entity.Solution;
-import com.example.project.exception.SolutionException;
+import com.example.project.solution.domain.Solution;
+import com.example.project.error.exception.solution.SolutionException;
 import com.example.project.solution.repository.SolutionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

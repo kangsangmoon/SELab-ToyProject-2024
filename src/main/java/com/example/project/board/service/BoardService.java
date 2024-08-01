@@ -2,9 +2,9 @@ package com.example.project.board.service;
 
 import com.example.project.board.dto.BoardResponse;
 import com.example.project.board.dto.request.*;
-import com.example.project.board.entity.Board;
+import com.example.project.board.domain.Board;
 import com.example.project.board.repository.BoardRepository;
-import com.example.project.exception.BoardException;
+import com.example.project.error.exception.board.BoardException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

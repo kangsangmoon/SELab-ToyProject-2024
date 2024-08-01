@@ -1,6 +1,6 @@
 package com.example.project.solution.dto.request.admin.update;
 
-import com.example.project.solution.entity.Difficulty;
+import com.example.project.solution.domain.Difficulty;
 import lombok.Data;
 
 @Data

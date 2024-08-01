@@ -1,9 +1,7 @@
 package com.example.project.board.repository;
 
-import com.example.project.board.entity.Board;
-import org.springframework.data.domain.Page;
+import com.example.project.board.domain.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository

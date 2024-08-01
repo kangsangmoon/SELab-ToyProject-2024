@@ -1,6 +1,6 @@
 package com.example.project.board.dto;
 
-import com.example.project.board.entity.Board;
+import com.example.project.board.domain.Board;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

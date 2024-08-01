@@ -1,12 +1,11 @@
 package com.example.project.solution.repository;
 
-import com.example.project.solution.entity.Difficulty;
-import com.example.project.solution.entity.Solution;
+import com.example.project.solution.domain.Difficulty;
+import com.example.project.solution.domain.Solution;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,7 @@
 package com.example.project.solution.dto;
 
-import com.example.project.solution.entity.Difficulty;
-import com.example.project.solution.entity.Solution;
+import com.example.project.solution.domain.Difficulty;
+import com.example.project.solution.domain.Solution;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

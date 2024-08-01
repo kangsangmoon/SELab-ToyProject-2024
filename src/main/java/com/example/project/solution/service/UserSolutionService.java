@@ -2,9 +2,8 @@ package com.example.project.solution.service;
 
 import com.example.project.solution.dto.SolutionResponse;
 import com.example.project.solution.dto.request.user.FindRequest;
-import com.example.project.solution.dto.request.user.filter_find.DifficultyFindRequest;
-import com.example.project.solution.entity.Solution;
-import com.example.project.exception.SolutionException;
+import com.example.project.solution.domain.Solution;
+import com.example.project.error.exception.solution.SolutionException;
 import com.example.project.solution.repository.SolutionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
