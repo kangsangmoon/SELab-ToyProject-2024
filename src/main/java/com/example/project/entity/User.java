@@ -3,22 +3,23 @@ package com.example.project.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
+@Data
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
-@Data
+@AllArgsConstructor
 public class User {
 
     @Id
     private String userId;
+
     private String password;
+
     private String userName;
+
     private String email;
 
-    public User(String userId, String password, String userName, String email) {
-        this.userId = userId;
-        this.password = password;
-        this.userName = userName;
-        this.email = email;
-    }
 }
+
