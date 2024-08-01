@@ -1,36 +1,27 @@
 package com.example.project.common.dto;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Data
-@RequiredArgsConstructor
 public class ResponseDto<T> {
     private final T data;
+    private final String message;
+    private final String serverDateTime;
 
-    public static <T> ResponseEntity<ResponseDto<T>> ok(T data) {
-        var response = new ResponseDto<T>(data);
-        return ResponseEntity.ok(response);
+    public ResponseDto(ResponseMessage message, T data) {
+        this.message = message.name();
+        this.serverDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        this.data = data;
     }
 
-    public static <T> ResponseEntity<ResponseDto<T>> created(T data) {
-        var response = new ResponseDto<T>(data);
+    public static  <T> ResponseEntity<ResponseDto<T>> toResponseEntity(ResponseMessage message, T data) {
         return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(response);
+                .status(message.getStatus())
+                .body(new ResponseDto<>(message, data));
     }
 
-    public static ResponseEntity<Void> noContent() {
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build();
-    }
-
-    public static ResponseEntity<Void> notFound() {
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .build();
-    }
 }

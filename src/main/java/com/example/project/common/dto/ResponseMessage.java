@@ -28,11 +28,12 @@ public enum ResponseMessage {
     DELETE_SUCCESS_BOARD(HttpStatus.OK,"해당 Board 삭제 성공 했습니다."),
     UPLOAD_IMAGE_SUCCESS(HttpStatus.CREATED, "이미지 업로드 성공"),
 
-    // 댓글 성공 message
-    CREATE_SUCCESS_COMMENT(HttpStatus.CREATED,"댓글 생성 성공 했습니다."),
-    UPDATE_SUCCESS_COMMENT(HttpStatus.OK,"댓글 수정 성공 했습니다."),
-    READ_ALL_SUCCESS_COMMENT(HttpStatus.OK,"전체 댓글 읽기 성공 했습니다."),
-    DELETE_SUCCESS_COMMENT(HttpStatus.OK,"해당 댓글 읽기 성공 했습니다."),
+    //
+    CREATE_SUCCESS_SOLUTION(HttpStatus.CREATED,"문제 생성 성공 했습니다."),
+    UPDATE_SUCCESS_SOLUTION(HttpStatus.OK,"문제 수정 성공 했습니다."),
+    READ_ALL_SUCCESS_SOLUTION(HttpStatus.OK,"전체 문제 읽기 성공 했습니다."),
+    DELETE_SUCCESS_SOLUTION(HttpStatus.OK,"해당 문제 삭제 성공 했습니다."),
+    DELETE_FAIL_SOLUTION(HttpStatus.NOT_FOUND, "해당 문제를 삭제하는데 실패했습니다")
     ;
 
     public final static String SUCCESS_MESSAGE = "SUCCESS";

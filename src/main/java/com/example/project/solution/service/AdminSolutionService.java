@@ -36,14 +36,15 @@ public class AdminSolutionService {
     }
 
     @Transactional
-    public boolean delete(DeleteRequest request) {
+    public SolutionResponse delete(DeleteRequest request) {
         if (request.getAdminId().equals("admin")) {
             if (solutionRepository.existsById(request.getSolutionId())) {
+                Solution solution = findBySolutionId(request.getSolutionId());
                 solutionRepository.deleteById(request.getSolutionId());
-                return true;
+                return SolutionResponse.from(solution);
             }
         }
-        return false;
+        return null;
     }
 
     private Solution findBySolutionId(Long solutionId) {

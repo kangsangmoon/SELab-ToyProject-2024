@@ -1,6 +1,8 @@
 package com.example.project.solution.controller;
 
-import com.example.project.solution.common.dto.ResponseDto;
+import com.example.project.common.dto.ResponseDto;
+import com.example.project.common.dto.ResponseMessage;
+import com.example.project.solution.dto.SolutionResponse;
 import com.example.project.solution.dto.request.admin.DeleteRequest;
 import com.example.project.solution.dto.request.admin.RegisterRequest;
 import com.example.project.solution.dto.request.admin.update.ContextUpdateRequest;
@@ -26,45 +28,46 @@ public class AdminSolutionController {
     public ResponseEntity<?> contextUpdate(ContextUpdateRequest request) {
         var response = service.contextUpdate(request);
 
-        return ResponseDto.ok(response);
+        return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_SOLUTION, response);
     }
 
     @PatchMapping("/difficulty")
     public ResponseEntity<?> difficultyUpdate(DifficultyUpdateRequest request) {
         var response = service.difficultyUpdate(request);
 
-        return ResponseDto.ok(response);
+        return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_SOLUTION, response);
     }
 
     @PatchMapping("/example")
-    public ResponseEntity<?> exampleUpdate(ExampleUpdateRequest request){
+    public ResponseEntity<?> exampleUpdate(ExampleUpdateRequest request) {
         var response = service.exampleUpdate(request);
 
-        return ResponseDto.ok(response);
+        return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_SOLUTION, response);
     }
 
 
     @PatchMapping
-    public ResponseEntity<?> update(UpdateRequest request){
+    public ResponseEntity<?> update(UpdateRequest request) {
         var response = service.updateAll(request);
 
-        return ResponseDto.ok(response);
+        return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_SOLUTION, response);
     }
 
     @DeleteMapping
-    public ResponseEntity<?> delete(DeleteRequest request){
-        if(service.delete(request)){
-            return ResponseDto.noContent();
+    public ResponseEntity<?> delete(DeleteRequest request) {
+        SolutionResponse response = service.delete(request);
+        if (response != null) {
+            return ResponseDto.toResponseEntity(ResponseMessage.DELETE_SUCCESS_SOLUTION, response);
         }
 
-        return ResponseDto.notFound();
+        return ResponseDto.toResponseEntity(ResponseMessage.DELETE_FAIL_SOLUTION, null);
     }
 
     @GetMapping
-    public ResponseEntity<?> register(RegisterRequest request){
+    public ResponseEntity<?> register(RegisterRequest request) {
         var response = service.register(request);
 
-        return ResponseDto.created(response);
+        return ResponseDto.toResponseEntity(ResponseMessage.CREATE_SUCCESS_SOLUTION, response);
     }
 
 }

@@ -1,9 +1,10 @@
 package com.example.project.board.controller;
 
-import com.example.project.board.common.dto.PageDto;
-import com.example.project.board.common.dto.ResponseDto;
+import com.example.project.board.dto.BoardResponse;
 import com.example.project.board.dto.request.*;
 import com.example.project.board.service.BoardService;
+import com.example.project.common.dto.ResponseDto;
+import com.example.project.common.dto.ResponseMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -25,21 +26,21 @@ public class BoardController {
     public ResponseEntity<?> register(@RequestBody BoardRegisterRequest request) {
         var response = boardService.postRegistration(request);
 
-        return ResponseDto.created(response);
+        return ResponseDto.toResponseEntity(ResponseMessage.CREATE_SUCCESS_BOARD, response);
     }
 
     @GetMapping
     public ResponseEntity<?> read(@RequestBody BoardReadRequest request) {
         var response = boardService.read(request);
 
-        return ResponseDto.ok(response);
+        return ResponseDto.toResponseEntity(ResponseMessage.READ_SUCCESS_BOARD, response);
     }
 
     @GetMapping("/all")
     public ResponseEntity<?> readAll(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         var response = boardService.readAll(pageable);
 
-        return ResponseDto.ok(response);
+        return ResponseDto.toResponseEntity(ResponseMessage.READ_SUCCESS_ALL_BOARD, response);
     }
 
     /*@GetMapping("/solution")
@@ -57,14 +58,14 @@ public class BoardController {
     public ResponseEntity<?> update(BoardUpdateRequest request) {
         var response = boardService.update(request);
 
-        return ResponseDto.ok(response);
+        return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_BOARD, response);
     }
 
 
     @DeleteMapping
-    public ResponseEntity<Void> delete(BoardDeleteRequest request) {
-        boardService.delete(request);
+    public ResponseEntity<ResponseDto<BoardResponse>> delete(BoardDeleteRequest request) {
+        BoardResponse delete = boardService.delete(request);
 
-        return ResponseDto.noContent();
+        return ResponseDto.toResponseEntity(ResponseMessage.DELETE_SUCCESS_BOARD,delete);
     }
 }

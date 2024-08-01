@@ -16,6 +16,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -60,5 +63,11 @@ public class UserService {
     public User findByIdFromLogin(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new InvalidLoginInfoException(ErrorMessage.INVALID_LOGIN_USER_INFORMATION_EXCEPTION, "잘못된 유저 로그인 정보입니다"));
+    }
+
+    public List<UserResponse> searchAllMember() {
+        return userRepository.findAll().stream()
+                .map(User::toResponseDto)
+                .collect(Collectors.toList());
     }
 }

@@ -76,16 +76,16 @@ public class BoardService {
     }*/
 
     @Transactional
-    public boolean delete(BoardDeleteRequest request) {
+    public BoardResponse delete(BoardDeleteRequest request) {
         Board board = repository
                 .findById(request.getUserId())
                 .orElseThrow(BoardException::new);
 
         if (board.equals(request.getUserId())) {
             repository.delete(board);
-            return true;
+            return BoardResponse.from(board);
         }
 
-        return false;
+        return null;
     }
 }
