@@ -54,7 +54,7 @@ public class UserService {
     }
 
     public void loginCheckException(UserDetail detail) {
-        if(detail.getRoleType() == RoleType.GUEST) {
+        if(detail.getRoleType() == RoleType.USER) {
             throw new LoginTokenNullException(ErrorMessage.NOT_LOGIN_USER_EXCEPTION, "로그인 정보가 없습니다");
         }
     }

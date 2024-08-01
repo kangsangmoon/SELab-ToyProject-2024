@@ -21,6 +21,6 @@ public class UserDetail {
     }
 
     public UserDetail() {
-        this.roleType = RoleType.GUEST;
+        this.roleType = RoleType.USER;
     }
 }

@@ -10,9 +10,11 @@ import com.example.project.user.dto.request.UserUpdateRequest;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
+@NoArgsConstructor
 public class User extends BaseEntity {
 
     @Id
@@ -43,16 +45,16 @@ public class User extends BaseEntity {
     private RoleType roleType;
 
 
-
     @Builder
-    public User(String email,String userId,  String password, String name){
+    public User(String email, String userId, String password, String name, RoleType roleType) {
         this.userId = userId;
         this.email = new Email(email);
         this.password = password;
         this.name = new Name(name);
+        this.roleType = roleType;
     }
 
-    public UserResponse toResponseDto(){
+    public UserResponse toResponseDto() {
         return UserResponse.builder()
                 .id(id)
                 .userId(userId)
@@ -63,14 +65,14 @@ public class User extends BaseEntity {
                 .build();
     }
 
-    public void updateUser(UserUpdateRequest request){
+    public void updateUser(UserUpdateRequest request) {
         this.email = new Email(request.getEmail());
         this.password = request.getPassword();
         this.name = new Name(request.getName());
         this.userId = request.getUserId();
     }
 
-    public void addPoint(){
+    public void addPoint() {
         this.point++;
     }
 

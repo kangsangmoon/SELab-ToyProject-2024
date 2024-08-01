@@ -4,7 +4,7 @@ import com.example.project.auth.domain.UserDetail;
 import com.example.project.auth.dto.request.JoinRequest;
 import com.example.project.auth.token.TokenProvider;
 import com.example.project.error.dto.ErrorMessage;
-import com.example.project.error.exception.NotExistMemberException;
+import com.example.project.error.exception.user.NotExistUserException;
 import com.example.project.error.exception.user.InvalidPasswordMatchException;
 import com.example.project.error.exception.user.NotExistUserInfoException;
 import com.example.project.user.domain.vo.Email;
@@ -29,7 +29,7 @@ public class AuthService {
     @Transactional(readOnly = true)
     public UserDetail loadUserById(Long id) {
         var member =  userRepository.findById(id)
-                .orElseThrow(() -> new NotExistMemberException(ErrorMessage.NOT_EXIST_MEMBER_EXCEPTION, "해당 유저 정보가 존재하지 않습니다."));
+                .orElseThrow(() -> new NotExistUserException(ErrorMessage.NOT_EXIST_MEMBER_EXCEPTION, "해당 유저 정보가 존재하지 않습니다."));
 
         return new UserDetail(member);
     }
@@ -43,7 +43,7 @@ public class AuthService {
     public String userLogin(JoinRequest joinRequest){
         var member = userRepository.findByEmail(new Email(joinRequest.getEmail()))
                 .orElseThrow(
-                        () -> new NotExistMemberException(ErrorMessage.NOT_EXIST_MEMBER_EXCEPTION, "해당 유저 정보가 존재하지 않습니다.")
+                        () -> new NotExistUserException(ErrorMessage.NOT_EXIST_MEMBER_EXCEPTION, "해당 유저 정보가 존재하지 않습니다.")
                 );
 
         if(!passwordEncoder.matches(joinRequest.getPassword(), member.getPassword())) {

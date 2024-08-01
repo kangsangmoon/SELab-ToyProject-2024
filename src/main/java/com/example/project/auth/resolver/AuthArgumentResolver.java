@@ -41,7 +41,7 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
         }
 
         if(token == null){
-            userData = new Authentication(new UserDetail(), RoleType.GUEST).getUserDetail();
+            userData = new Authentication(new UserDetail(), RoleType.USER).getUserDetail();
         }
 
         return Optional.of(userData).orElseThrow(NullPointerException::new);

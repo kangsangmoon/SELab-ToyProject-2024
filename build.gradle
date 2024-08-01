@@ -33,7 +33,6 @@ dependencies {
     //JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-
     //Thymeleaf
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
