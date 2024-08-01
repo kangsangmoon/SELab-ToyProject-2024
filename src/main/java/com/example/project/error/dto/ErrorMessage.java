@@ -29,6 +29,8 @@ public enum ErrorMessage {
     SIGNATURE_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 서명입니다."),
     WRONG_JWT_EXCEPTION(HttpStatus.UNAUTHORIZED, "잘못된 JWT 입니다"),
     EXPIRED_JWT_EXCEPTION(HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다"),
+
+    //USER
     INVALID_EMAIL_REGEX_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 이메일 형식입니다"),
     INVALID_PASSWORD_REGEX_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 비밀번호 형식입니다"),
     INVALID_NAME_REGEX_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 이름 형식 입니다"),
@@ -43,8 +45,13 @@ public enum ErrorMessage {
     UNAUTHORIZED_ACCESS_EXCEPTION(HttpStatus.BAD_REQUEST,"권한이 없는 접근 입니다."),
     INVALID_DATA_ARGUMENT(HttpStatus.BAD_REQUEST, "invalid data argument"),
     FAILURE_FILE_CONVERT(HttpStatus.BAD_REQUEST, "이미지 업로드 실패"),
+
+    //BOARD
+    DUPLICATE_BOARD_NAME_DUPLICATE(HttpStatus.BAD_REQUEST,"중복된 이름을 가진 Board가 있습니다"),
+    BOARD_NOT_EXIST(HttpStatus.NOT_FOUND,"Board 가 존재하지 않습니다"),
+    ID_NOT_MATCH_TO_DELETE_BOARD(HttpStatus.BAD_REQUEST,"작성자와 요청자 ID가 일치하지 않아 삭제하지 못했습니다")
     ;
-    ;
+
 
     private final HttpStatus status;
     private final String message;
@@ -61,4 +68,5 @@ public enum ErrorMessage {
     public String getMessage() {
         return message;
     }
+
 }

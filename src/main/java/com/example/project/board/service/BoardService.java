@@ -4,7 +4,8 @@ import com.example.project.board.dto.BoardResponse;
 import com.example.project.board.dto.request.*;
 import com.example.project.board.domain.Board;
 import com.example.project.board.repository.BoardRepository;
-import com.example.project.error.exception.board.BoardException;
+import com.example.project.error.dto.ErrorMessage;
+import com.example.project.error.exception.board.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -12,39 +13,43 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardService {
 
-    private final BoardRepository repository;
+    private final BoardRepository boardRepository;
 
     @Transactional
     public BoardResponse postRegistration(BoardRegisterRequest request) {
-        Board board = new Board(
-                request.getTitle(),
-                request.getContext(),
-                request.getUserId(),
-                request.getSolutionId()
-        );
+        duplicateValidationBoardTitle(request.getTitle());
 
+        Board savedBoard = boardRepository.save(request.toEntity());
 
-        Board savedBoard = repository.save(board);
+        return savedBoard.toResponseDto();
+    }
 
-        return BoardResponse.from(savedBoard);
+    @Transactional(readOnly = true)
+    public void duplicateValidationBoardTitle(String title) {
+        boardRepository.findByTitle(title).ifPresent(board -> {
+            throw new AlreadyExistBoardNameException(ErrorMessage.DUPLICATE_BOARD_NAME_DUPLICATE, "중복된 이름을 가진 Board가 있습니다");
+        });
     }
 
 
     @Transactional
     public BoardResponse update(BoardUpdateRequest request) {
 
-        Board board = repository
+        Board board = boardRepository
                 .findById(request.getId())
-                .orElseThrow(BoardException::new);
+                .orElseThrow(InvalidBoardIdException::new);
 
         if (board.getId().equals(request.getUserId())) {
             board.updateBoard(request.getTitle(), request.getContext());
-            return BoardResponse.from(board);
+            return board.toResponseDto();
         } else {
             return null;
         }
@@ -53,22 +58,26 @@ public class BoardService {
     @Transactional(readOnly = true)
     public BoardResponse read(BoardReadRequest request) {
 
-        Board board = repository
+        Board board = boardRepository
                 .findById(request.getBoardId())
-                .orElseThrow(BoardException::new);
+                .orElseThrow(() -> new InvalidBoardIdException(ErrorMessage.BOARD_NOT_FOUND_ERROR, "Board 가 존재하지 않습니다"));
 
 
-        return BoardResponse.from(board);
+        return board.toResponseDto();
     }
 
 
     @Transactional(readOnly = true)
-    public Page<BoardResponse> readAll(Pageable pageable) {
+    public List<BoardResponse> readAll(Pageable pageable) {
 
-        return repository.findAll(pageable).map(BoardResponse::from);
+        return boardRepository.findAll(pageable)
+                .stream()
+                .map(Board::toResponseDto)
+                .collect(Collectors.toList());
     }
 
-    /*@Transactional(readOnly = true)
+    /*
+    @Transactional(readOnly = true)
     public Page<BoardResponse> readSolutionBoard(Pageable pageable, BoardReadAllRequest request){
         return repository
                 .findBySolutionId(request.getSolutionId())
@@ -77,15 +86,13 @@ public class BoardService {
 
     @Transactional
     public BoardResponse delete(BoardDeleteRequest request) {
-        Board board = repository
-                .findById(request.getUserId())
-                .orElseThrow(BoardException::new);
+        Board board = boardRepository
+                .findById(request.getBoardId())
+                .orElseThrow(() -> new NotExistBoardException(ErrorMessage.BOARD_NOT_FOUND_ERROR, "Board 가 존재하지 않습니다"));
 
-        if (board.equals(request.getUserId())) {
-            repository.delete(board);
-            return BoardResponse.from(board);
-        }
-
-        return null;
+        if (board.getUserId().equals(request.getUserId())) {
+            boardRepository.delete(board);
+            return board.toResponseDto();
+        }else throw new IdNotMatchException(ErrorMessage.ID_NOT_MATCH_TO_DELETE_BOARD,"작성자 ID와 요청자 ID가 달라서 삭제할 수 없습니다");
     }
 }

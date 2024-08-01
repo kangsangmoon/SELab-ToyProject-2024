@@ -1,6 +1,7 @@
 package com.example.project.solution.domain;
 
 import com.example.project.common.BaseEntity;
+import com.example.project.solution.dto.SolutionResponse;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -56,5 +57,17 @@ public class Solution extends BaseEntity {
 
     public void increaseSolved() {
         this.solved++;
+    }
+
+    public SolutionResponse toResponseDto(){
+        return SolutionResponse.builder()
+                .id(id)
+                .difficulty(difficulty)
+                .title(title)
+                .description(description)
+                .inExample(inExample)
+                .outExample(outExample)
+                .solved(solved)
+                .build();
     }
 }

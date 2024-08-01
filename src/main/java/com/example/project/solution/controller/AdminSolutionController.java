@@ -24,6 +24,10 @@ public class AdminSolutionController {
 
     private final AdminSolutionService service;
 
+    /**
+     * @param request : Solution 의 Context 부분을 Update 할 수 있도록 정보를 가진 dto
+     * @return SolutionResponse : Update 된 Solution 에 대한 정보를 가지는 dto
+     * */
     @PatchMapping("/context")
     public ResponseEntity<?> contextUpdate(ContextUpdateRequest request) {
         var response = service.contextUpdate(request);
@@ -31,6 +35,10 @@ public class AdminSolutionController {
         return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_SOLUTION, response);
     }
 
+    /**
+     * @param request : Solution 의 Difficulty 부분을 Update 할 수 있도록 정보를 가진 dto
+     * @return SolutionResponse : Update 된 Solution 에 대한 정보를 가지는 dto
+     * */
     @PatchMapping("/difficulty")
     public ResponseEntity<?> difficultyUpdate(DifficultyUpdateRequest request) {
         var response = service.difficultyUpdate(request);
@@ -38,6 +46,10 @@ public class AdminSolutionController {
         return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_SOLUTION, response);
     }
 
+    /**
+     * @param request : Solution 의 Example 부분을 Update 할 수 있도록 정보를 가진 dto
+     * @return SolutionResponse : Update 된 Solution 에 대한 정보를 가지는 dto
+     * */
     @PatchMapping("/example")
     public ResponseEntity<?> exampleUpdate(ExampleUpdateRequest request) {
         var response = service.exampleUpdate(request);
@@ -45,7 +57,10 @@ public class AdminSolutionController {
         return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_SOLUTION, response);
     }
 
-
+    /**
+     * @param request : Solution 을 Update 할 수 있도록 정보를 가진 dto
+     * @return SolutionResponse : Update 된 Solution 에 대한 정보를 가지는 dto
+     * */
     @PatchMapping
     public ResponseEntity<?> update(UpdateRequest request) {
         var response = service.updateAll(request);
@@ -53,6 +68,10 @@ public class AdminSolutionController {
         return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_SOLUTION, response);
     }
 
+    /**
+     * @param request : Solution 을 삭제할 수 있는 정보를 가진 dto
+     * @return SolutionResponse : 삭제된 Solution 에 대한 정보를 가지는 dto
+     * */
     @DeleteMapping
     public ResponseEntity<?> delete(DeleteRequest request) {
         SolutionResponse response = service.delete(request);
@@ -63,6 +82,10 @@ public class AdminSolutionController {
         return ResponseDto.toResponseEntity(ResponseMessage.DELETE_FAIL_SOLUTION, null);
     }
 
+    /**
+     * @param request : Solution 을 등록할 수 있는 정보를 가진 dto
+     * @return SolutionResponse : 등록된 Solution 에 대한 정보를 가지는 dto
+     * */
     @GetMapping
     public ResponseEntity<?> register(RegisterRequest request) {
         var response = service.register(request);

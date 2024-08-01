@@ -1,11 +1,11 @@
 package com.example.project.board.dto;
 
-import com.example.project.board.domain.Board;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class BoardResponse {
     private Long id;
     private String title;
@@ -13,14 +13,12 @@ public class BoardResponse {
     private String userId;
     private Long solutionId;
 
-
-    public static BoardResponse from(Board board){
-        return new BoardResponse(
-                board.getId(),
-                board.getTitle(),
-                board.getContext(),
-                board.getUserId(),
-                board.getSolutionId()
-        );
+    @Builder
+    public BoardResponse(Long id, String title, String context, String userId, Long solutionId) {
+        this.id = id;
+        this.title = title;
+        this.context = context;
+        this.userId = userId;
+        this.solutionId = solutionId;
     }
 }

@@ -27,7 +27,7 @@ public class UserService {
 
     @Transactional
     public UserResponse register(UserRegisterRequest request){
-        duplicateValidationMemberEmail(request.getEmail());
+        duplicateValidationUserEmail(request.getEmail());
 
         var response = userRepository.save(request.toEntity());
 
@@ -35,7 +35,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public void duplicateValidationMemberEmail(String email){
+    public void duplicateValidationUserEmail(String email){
         userRepository.findByEmail(new Email(email))
                 .ifPresent(member -> {
                     throw new AlreadyExistUserEmailException(ErrorMessage.ALREADY_EXIST_MEMBER_EMAIL_EXCEPTION, "이미 존재하는 이메일 정보입니다");
@@ -44,7 +44,7 @@ public class UserService {
 
 
     @Transactional
-    public UserResponse editMember(UserDetail detail, UserUpdateRequest request) {
+    public UserResponse edisUser(UserDetail detail, UserUpdateRequest request) {
         loginCheckException(detail);
         var user = findByIdFromLogin(detail.getId());
         user.updateUser(request);

@@ -32,23 +32,19 @@ public class AdminSolutionService {
 
         Solution savedSolution = solutionRepository.save(solution);
 
-        return SolutionResponse.from(savedSolution);
+        return savedSolution.toResponseDto();
     }
 
     @Transactional
     public SolutionResponse delete(DeleteRequest request) {
         if (request.getAdminId().equals("admin")) {
             if (solutionRepository.existsById(request.getSolutionId())) {
-                Solution solution = findBySolutionId(request.getSolutionId());
+                Solution solution = solutionRepository.findById(request.getSolutionId()).orElseThrow(SolutionException::new);
                 solutionRepository.deleteById(request.getSolutionId());
-                return SolutionResponse.from(solution);
+                return solution.toResponseDto();
             }
         }
         return null;
-    }
-
-    private Solution findBySolutionId(Long solutionId) {
-        return solutionRepository.findById(solutionId).orElseThrow(SolutionException::new);
     }
 
     private boolean isAdmin(String id) {
@@ -58,11 +54,12 @@ public class AdminSolutionService {
     @Transactional
     public SolutionResponse contextUpdate(ContextUpdateRequest request) {
         if (isAdmin(request.getAdminId())) {
-            Solution solution = findBySolutionId(request.getSolutionId());
+            Solution solution = solutionRepository.findById(request.getSolutionId())
+                    .orElseThrow(SolutionException::new);
 
             solution.updateContext(request.getTitle(), request.getDescription());
 
-            return SolutionResponse.from(solution);
+            return solution.toResponseDto();
         }
 
         return null;
@@ -71,11 +68,12 @@ public class AdminSolutionService {
     @Transactional
     public SolutionResponse difficultyUpdate(DifficultyUpdateRequest request) {
         if (isAdmin(request.getAdminId())) {
-            Solution solution = findBySolutionId(request.getSolutionId());
+            Solution solution = solutionRepository.findById(request.getSolutionId())
+                    .orElseThrow(SolutionException::new);
 
             solution.updateDifficulty(request.getDifficulty());
 
-            return SolutionResponse.from(solution);
+            return solution.toResponseDto();
         }
         return null;
     }
@@ -83,11 +81,12 @@ public class AdminSolutionService {
     @Transactional
     public SolutionResponse exampleUpdate(ExampleUpdateRequest request) {
         if (isAdmin(request.getAdminId())) {
-            Solution solution = findBySolutionId(request.getSolutionId());
+            Solution solution = solutionRepository.findById(request.getSolutionId())
+                    .orElseThrow(SolutionException::new);
 
             solution.updateExample(request.getInExample(), request.getOutExample());
 
-            return SolutionResponse.from(solution);
+            return solution.toResponseDto();
         }
         return null;
     }
@@ -95,7 +94,8 @@ public class AdminSolutionService {
     @Transactional
     public SolutionResponse updateAll(UpdateRequest request) {
         if (isAdmin(request.getAdminId())) {
-            Solution solution = findBySolutionId(request.getSolutionId());
+            Solution solution = solutionRepository.findById(request.getSolutionId())
+                    .orElseThrow(SolutionException::new);
 
             solution.update(
                     request.getDifficulty(),
@@ -105,7 +105,7 @@ public class AdminSolutionService {
                     request.getOutExample()
             );
 
-            return SolutionResponse.from(solution);
+            return solution.toResponseDto();
         }
         return null;
     }
