@@ -40,17 +40,18 @@ public enum ErrorMessage {
     INVALID_PASSWORD_MATCH_EXCEPTION(HttpStatus.BAD_REQUEST, "비밀번호가 맞지 않습니다"),
     ALREADY_EXIST_MEMBER_EMAIL_EXCEPTION(HttpStatus.BAD_REQUEST, "이미 해당 이메일 정보가 등록되어 있습니다."),
     INVALID_LOGIN_USER_INFORMATION_EXCEPTION(HttpStatus.NOT_FOUND, "잘못된 로그인 정보입니다"),
+    INVALID_PASSWORD_TO_LOGIN(HttpStatus.BAD_REQUEST, "Password가 틀렸습니다"),
+    INVALID_ID_TO_LOGIN(HttpStatus.BAD_REQUEST, "ID가 일치하지 않습니다"),
     NOT_LOGIN_USER_EXCEPTION(HttpStatus.BAD_REQUEST, "로그인 정보가 없습니다"),
-    NON_EXISTENT_BOARD_EXCEPTION(HttpStatus.BAD_REQUEST,"해당 보드가 존재하지 않습니다."),
-    UNAUTHORIZED_ACCESS_EXCEPTION(HttpStatus.BAD_REQUEST,"권한이 없는 접근 입니다."),
+    NON_EXISTENT_BOARD_EXCEPTION(HttpStatus.BAD_REQUEST, "해당 보드가 존재하지 않습니다."),
+    UNAUTHORIZED_ACCESS_EXCEPTION(HttpStatus.BAD_REQUEST, "권한이 없는 접근 입니다."),
     INVALID_DATA_ARGUMENT(HttpStatus.BAD_REQUEST, "invalid data argument"),
     FAILURE_FILE_CONVERT(HttpStatus.BAD_REQUEST, "이미지 업로드 실패"),
 
     //BOARD
-    DUPLICATE_BOARD_NAME_DUPLICATE(HttpStatus.BAD_REQUEST,"중복된 이름을 가진 Board가 있습니다"),
-    BOARD_NOT_EXIST(HttpStatus.NOT_FOUND,"Board 가 존재하지 않습니다"),
-    ID_NOT_MATCH_TO_DELETE_BOARD(HttpStatus.BAD_REQUEST,"작성자와 요청자 ID가 일치하지 않아 삭제하지 못했습니다")
-    ;
+    DUPLICATE_BOARD_NAME_DUPLICATE(HttpStatus.BAD_REQUEST, "중복된 이름을 가진 Board가 있습니다"),
+    BOARD_NOT_EXIST(HttpStatus.NOT_FOUND, "Board 가 존재하지 않습니다"),
+    ID_NOT_MATCH_TO_DELETE_BOARD(HttpStatus.BAD_REQUEST, "작성자와 요청자 ID가 일치하지 않아 삭제하지 못했습니다");
 
 
     private final HttpStatus status;
