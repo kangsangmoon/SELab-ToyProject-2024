@@ -82,7 +82,7 @@ public class UserController {
         UserDetail userDetail = new UserDetail(userResponse.toEntity());
         var edit = userService.updateUser(userDetail, request);
 
-        model.addAttribute("UserInfo", edit);//
+        model.addAttribute("UserInfo", edit);
 
         return "/authentication/user/info/info";
     }
