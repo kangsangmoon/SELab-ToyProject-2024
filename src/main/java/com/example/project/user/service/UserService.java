@@ -42,9 +42,14 @@ public class UserService {
                 });
     }
 
+    @Transactional
+    public UserResponse get(Long id){
+        return userRepository.findById(id).get().toResponseDto();
+    }
+
 
     @Transactional
-    public UserResponse edisUser(UserDetail detail, UserUpdateRequest request) {
+    public UserResponse updateUser(UserDetail detail, UserUpdateRequest request) {
         loginCheckException(detail);
         var user = findByIdFromLogin(detail.getId());
         user.updateUser(request);

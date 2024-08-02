@@ -50,7 +50,7 @@ public class UserApiController {
     @PatchMapping("/edit")
     public ResponseEntity<?> editMember(@AuthMember UserDetail detail
             , @RequestBody @Valid UserUpdateRequest request) {
-        var response = memberService.edisUser(detail, request);
+        var response = memberService.updateUser(detail, request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.SUCCESS_UPDATE_USER, response);
     }
