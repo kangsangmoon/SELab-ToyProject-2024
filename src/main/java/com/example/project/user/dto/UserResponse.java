@@ -1,5 +1,6 @@
 package com.example.project.user.dto;
 
+import com.example.project.user.domain.User;
 import com.example.project.user.domain.vo.Email;
 import com.example.project.user.domain.vo.Name;
 import com.example.project.user.domain.vo.RoleType;
@@ -28,5 +29,17 @@ public class UserResponse {
         this.point = point;
         this.email = email;
         this.roleType = roleType;
+    }
+
+    public User toEntity(){
+        return new User(
+                this.id,
+                this.userId,
+                this.password,
+                this.name,
+                this.point,
+                this.email,
+                this.roleType
+        );
     }
 }

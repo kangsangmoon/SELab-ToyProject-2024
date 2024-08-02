@@ -1,10 +1,14 @@
 package com.example.project.user.controller.ui;
 
+import com.example.project.auth.domain.UserDetail;
 import com.example.project.error.exception.user.InvalidLoginUserIdException;
 import com.example.project.error.exception.user.InvalidLoginPasswordException;
 import com.example.project.user.controller.UserApiController;
+import com.example.project.user.domain.User;
+import com.example.project.user.domain.vo.RoleType;
 import com.example.project.user.dto.UserResponse;
 import com.example.project.user.dto.login.LoginRequest;
+import com.example.project.user.dto.request.UserUpdateRequest;
 import com.example.project.user.service.LoginService;
 import com.example.project.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -61,6 +65,27 @@ public class UserController {
         log.info("[ SYSTEM ] MyPage user 조회 성공했습니다 {}", id);
         model.addAttribute("UserInfo", userResponse);
 
-        return "/authentication/user/my_page";
+        return "/authentication/user/info/info";
+    }
+
+    //TODO 토큰 인증으로 유저 정보 수정 가능하도록 만들기
+    @GetMapping("/edit/{id}")
+    public String editInfo(Model model, @PathVariable Long id){
+        var userResponse = userService.get(id);
+        log.info("[ SYSTEM ] Edit user 조회 성공했습니다 {}", id);
+        model.addAttribute("UserResponse", userResponse);
+        model.addAttribute("UpdateRequest", new UserUpdateRequest());
+
+        return "/authentication/user/info/edit_info";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String edit(UserUpdateRequest request, UserResponse userResponse, Model model){
+        UserDetail userDetail = new UserDetail(userResponse.toEntity());
+        var edit = userService.updateUser(userDetail, request);
+
+        model.addAttribute("UserInfo", edit);
+
+        return "/authentication/user/info/info";
     }
 }
