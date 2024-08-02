@@ -4,8 +4,6 @@ import com.example.project.auth.domain.UserDetail;
 import com.example.project.error.exception.user.InvalidLoginUserIdException;
 import com.example.project.error.exception.user.InvalidLoginPasswordException;
 import com.example.project.user.controller.UserApiController;
-import com.example.project.user.domain.User;
-import com.example.project.user.domain.vo.RoleType;
 import com.example.project.user.dto.UserResponse;
 import com.example.project.user.dto.login.LoginRequest;
 import com.example.project.user.dto.request.UserUpdateRequest;
@@ -13,7 +11,6 @@ import com.example.project.user.service.LoginService;
 import com.example.project.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.repository.query.Param;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -79,6 +76,7 @@ public class UserController {
         return "/authentication/user/info/edit_info";
     }
 
+    //TODO 토큰 인증으로 유저 정보 수정하도록 만들기
     @PostMapping("/edit/{id}")
     public String edit(UserUpdateRequest request, UserResponse userResponse, Model model){
         UserDetail userDetail = new UserDetail(userResponse.toEntity());
