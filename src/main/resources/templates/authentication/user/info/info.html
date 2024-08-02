@@ -6,13 +6,6 @@
 </head>
 <body>
 <div>
-    private Long id;
-    private String userId;
-    private String password;
-    private Name name;
-    private Long point;
-    private Email email;
-    private RoleType roleType;
     <table th:object="${UserInfo}">
         <tr>
             <th>ID</th>
@@ -43,7 +36,7 @@
             <th th:text="${UserInfo.roleType}">Null</th>
         </tr>
     </table>
-
+    <button th:action="@{/edit/${UserInfo.id}}" th:object="${UserInfo}" method="get">유저 정보 수정하기</button>
 </div>
 </body>
 </html>
