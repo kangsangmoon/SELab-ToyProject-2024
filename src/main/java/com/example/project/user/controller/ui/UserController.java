@@ -78,7 +78,8 @@ public class UserController {
 
     //TODO 토큰 인증으로 유저 정보 수정하도록 만들기
     @PostMapping("/edit/{id}")
-    public String edit(UserUpdateRequest request, UserResponse userResponse, Model model){
+    public String edit(UserUpdateRequest request, Model model, @PathVariable Long id){
+        UserResponse userResponse = userService.get(id);
         UserDetail userDetail = new UserDetail(userResponse.toEntity());
         var edit = userService.updateUser(userDetail, request);
 
