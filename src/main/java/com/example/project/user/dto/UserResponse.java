@@ -1,5 +1,7 @@
 package com.example.project.user.dto;
 
+import com.example.project.restrictions.DomainRestrictions;
+import com.example.project.restrictions.ResponseRestrictions;
 import com.example.project.user.domain.User;
 import com.example.project.user.domain.vo.Email;
 import com.example.project.user.domain.vo.Name;
@@ -10,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UserResponse {
+public class UserResponse implements ResponseRestrictions<User> {
 
     private Long id;
     private String userId;

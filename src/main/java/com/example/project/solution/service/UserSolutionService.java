@@ -11,6 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class UserSolutionService {
@@ -18,17 +21,17 @@ public class UserSolutionService {
     private final SolutionRepository solutionRepository;
 
     @Transactional(readOnly = true)
-    public Page<SolutionResponse> findAll(Pageable pageable) {
+    public List<SolutionResponse> findAll(Pageable pageable) {
         return solutionRepository
-                .findAll(pageable)
-                .map(SolutionResponse::from);
+                .findAll(pageable).stream()
+                .map(Solution::toResponseDto).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public SolutionResponse findSolution(FindRequest request) {
         Solution solution = solutionRepository.findById(request.getSolutionId()).orElseThrow(SolutionException::new);
 
-        return SolutionResponse.from(solution);
+        return solution.toResponseDto();
     }
 
    /* @Transactional(readOnly = true)

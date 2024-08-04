@@ -1,6 +1,7 @@
 package com.example.project.solution.domain;
 
 import com.example.project.common.BaseEntity;
+import com.example.project.restrictions.DomainRestrictions;
 import com.example.project.solution.dto.SolutionResponse;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +11,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Solution extends BaseEntity {
+public class Solution extends BaseEntity implements DomainRestrictions<SolutionResponse> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,6 +60,7 @@ public class Solution extends BaseEntity {
         this.solved++;
     }
 
+    @Override
     public SolutionResponse toResponseDto(){
         return SolutionResponse.builder()
                 .id(id)

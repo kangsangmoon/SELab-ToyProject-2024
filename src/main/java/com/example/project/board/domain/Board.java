@@ -2,16 +2,15 @@ package com.example.project.board.domain;
 
 import com.example.project.board.dto.BoardResponse;
 import com.example.project.common.BaseEntity;
+import com.example.project.restrictions.DomainRestrictions;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Board extends BaseEntity {
+@AllArgsConstructor
+public class Board extends BaseEntity implements DomainRestrictions<BoardResponse> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,6 +40,7 @@ public class Board extends BaseEntity {
         this.context = context;
     }
 
+    @Override
     public BoardResponse toResponseDto(){
         return BoardResponse.builder()
                 .id(id)

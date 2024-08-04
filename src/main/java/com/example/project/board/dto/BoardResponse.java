@@ -1,12 +1,14 @@
 package com.example.project.board.dto;
 
+import com.example.project.board.domain.Board;
+import com.example.project.restrictions.ResponseRestrictions;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class BoardResponse {
+public class BoardResponse implements ResponseRestrictions<Board> {
     private Long id;
     private String title;
     private String context;
@@ -20,5 +22,16 @@ public class BoardResponse {
         this.context = context;
         this.userId = userId;
         this.solutionId = solutionId;
+    }
+
+    @Override
+    public Board toEntity() {
+        return new Board(
+                this.id,
+                this.title,
+                this.context,
+                this.userId,
+                this.solutionId
+        );
     }
 }
