@@ -2,7 +2,7 @@ package com.example.project.board.domain;
 
 import com.example.project.board.dto.BoardResponse;
 import com.example.project.common.BaseEntity;
-import com.example.project.restrictions.DomainRestrictions;
+import com.example.project.restrictions.Domain;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Board extends BaseEntity implements DomainRestrictions<BoardResponse> {
+public class Board extends BaseEntity implements Domain<BoardResponse> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

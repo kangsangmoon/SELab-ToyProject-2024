@@ -1,6 +1,6 @@
 package com.example.project.restrictions;
 
 
-public interface ResponseRestrictions<T> {
+public interface ResponseDto<T> {
     public T toEntity();
 }

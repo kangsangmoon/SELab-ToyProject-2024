@@ -1,11 +1,12 @@
 package com.example.project.user.dto.request;
 
+import com.example.project.restrictions.RegisterRequest;
 import com.example.project.user.domain.User;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class UserRegisterRequest {
+public class UserRegisterRequest implements RegisterRequest<User> {
     @NotNull
     private String userId;
     @NotNull
@@ -15,7 +16,7 @@ public class UserRegisterRequest {
     @NotNull
     private String email;
 
-
+    @Override
     public User toEntity(){
         return User.builder()
                 .email(email)

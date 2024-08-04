@@ -1,14 +1,14 @@
 package com.example.project.board.dto;
 
 import com.example.project.board.domain.Board;
-import com.example.project.restrictions.ResponseRestrictions;
+import com.example.project.restrictions.ResponseDto;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class BoardResponse implements ResponseRestrictions<Board> {
+public class BoardResponse implements ResponseDto<Board> {
     private Long id;
     private String title;
     private String context;

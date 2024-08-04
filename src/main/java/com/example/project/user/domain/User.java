@@ -1,7 +1,7 @@
 package com.example.project.user.domain;
 
 import com.example.project.common.BaseEntity;
-import com.example.project.restrictions.DomainRestrictions;
+import com.example.project.restrictions.Domain;
 import com.example.project.user.domain.converter.PasswordEncodeConverter;
 import com.example.project.user.domain.vo.Email;
 import com.example.project.user.domain.vo.Name;
@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends BaseEntity implements DomainRestrictions<UserResponse> {
+public class User extends BaseEntity implements Domain<UserResponse> {
 
     @Id
     @Column
