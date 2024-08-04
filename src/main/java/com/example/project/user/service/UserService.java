@@ -43,7 +43,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponse get(Long id){
+    public UserResponse read(Long id){
         return userRepository.findById(id).get().toResponseDto();
     }
 
@@ -70,7 +70,7 @@ public class UserService {
                 .orElseThrow(() -> new InvalidLoginInfoException(ErrorMessage.INVALID_LOGIN_USER_INFORMATION_EXCEPTION, "잘못된 유저 로그인 정보입니다"));
     }
 
-    public List<UserResponse> searchAllMember() {
+    public List<UserResponse> readAllUser() {
         return userRepository.findAll().stream()
                 .map(User::toResponseDto)
                 .collect(Collectors.toList());

@@ -45,7 +45,7 @@ public class UserSolutionController {
      * */
     @GetMapping
     public ResponseEntity<?> findSolution(SolutionFindRequest request){
-        var response = service.findSolution(request);
+        var response = service.read(request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.READ_SUCCESS_SOLUTION, response);
     }

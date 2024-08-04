@@ -28,7 +28,7 @@ public class BoardApiController {
      * */
     @PostMapping
     public ResponseEntity<?> register(@RequestBody BoardRegisterRequest request) {
-        var response = boardService.postRegistration(request);
+        var response = boardService.register(request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.CREATE_SUCCESS_BOARD, response);
     }

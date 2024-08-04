@@ -60,7 +60,7 @@ public class UserApiController {
      */
     @GetMapping
     public ResponseEntity<?> searchAllMember() {
-        var response = memberService.searchAllMember();
+        var response = memberService.readAllUser();
 
         return ResponseDto.toResponseEntity(ResponseMessage.SUCCESS_SEARCH_ALL_USER, response);
     }

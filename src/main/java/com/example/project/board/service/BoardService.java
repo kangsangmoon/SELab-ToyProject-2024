@@ -8,7 +8,6 @@ import com.example.project.error.dto.ErrorMessage;
 import com.example.project.error.exception.board.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +23,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     @Transactional
-    public BoardResponse postRegistration(BoardRegisterRequest request) {
+    public BoardResponse register(BoardRegisterRequest request) {
         duplicateValidationBoardTitle(request.getTitle());
 
         Board savedBoard = boardRepository.save(request.toEntity());

@@ -20,14 +20,14 @@ public class UserSolutionService {
     private final SolutionRepository solutionRepository;
 
     @Transactional(readOnly = true)
-    public List<SolutionResponse> findAll(Pageable pageable) {
+    public List<SolutionResponse> readAll(Pageable pageable) {
         return solutionRepository
                 .findAll(pageable).stream()
                 .map(Solution::toResponseDto).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public SolutionResponse findSolution(SolutionFindRequest request) {
+    public SolutionResponse read(SolutionFindRequest request) {
         Solution solution = solutionRepository.findById(request.getSolutionId()).orElseThrow(SolutionException::new);
 
         return solution.toResponseDto();
