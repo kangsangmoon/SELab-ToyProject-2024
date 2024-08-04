@@ -1,12 +1,11 @@
 package com.example.project.solution.service;
 
 import com.example.project.solution.dto.SolutionResponse;
-import com.example.project.solution.dto.request.user.FindRequest;
+import com.example.project.solution.dto.request.user.SolutionFindRequest;
 import com.example.project.solution.domain.Solution;
 import com.example.project.error.exception.solution.SolutionException;
 import com.example.project.solution.repository.SolutionRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +27,7 @@ public class UserSolutionService {
     }
 
     @Transactional(readOnly = true)
-    public SolutionResponse findSolution(FindRequest request) {
+    public SolutionResponse findSolution(SolutionFindRequest request) {
         Solution solution = solutionRepository.findById(request.getSolutionId()).orElseThrow(SolutionException::new);
 
         return solution.toResponseDto();

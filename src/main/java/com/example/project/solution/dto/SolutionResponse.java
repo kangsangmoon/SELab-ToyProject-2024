@@ -1,14 +1,13 @@
 package com.example.project.solution.dto;
 
-import com.example.project.restrictions.ResponseRestrictions;
+import com.example.project.restrictions.ResponseDto;
 import com.example.project.solution.domain.Difficulty;
 import com.example.project.solution.domain.Solution;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class SolutionResponse implements ResponseRestrictions<Solution> {
+public class SolutionResponse implements ResponseDto<Solution> {
     private Long id;
     private Difficulty difficulty;
     private String title;

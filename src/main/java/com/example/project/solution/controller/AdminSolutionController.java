@@ -3,12 +3,12 @@ package com.example.project.solution.controller;
 import com.example.project.common.dto.ResponseDto;
 import com.example.project.common.dto.ResponseMessage;
 import com.example.project.solution.dto.SolutionResponse;
-import com.example.project.solution.dto.request.admin.DeleteRequest;
-import com.example.project.solution.dto.request.admin.RegisterRequest;
-import com.example.project.solution.dto.request.admin.update.ContextUpdateRequest;
-import com.example.project.solution.dto.request.admin.update.DifficultyUpdateRequest;
-import com.example.project.solution.dto.request.admin.update.ExampleUpdateRequest;
-import com.example.project.solution.dto.request.admin.update.UpdateRequest;
+import com.example.project.solution.dto.request.admin.SolutionDeleteRequest;
+import com.example.project.solution.dto.request.admin.SolutionRegisterRequest;
+import com.example.project.solution.dto.request.admin.update.SolutionContextUpdateRequest;
+import com.example.project.solution.dto.request.admin.update.SolutionDifficultyUpdateRequest;
+import com.example.project.solution.dto.request.admin.update.SolutionExampleUpdateRequest;
+import com.example.project.solution.dto.request.admin.update.SolutionUpdateRequest;
 import com.example.project.solution.service.AdminSolutionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class AdminSolutionController {
      * @return SolutionResponse : Update 된 Solution 에 대한 정보를 가지는 dto
      * */
     @PatchMapping("/context")
-    public ResponseEntity<?> contextUpdate(ContextUpdateRequest request) {
+    public ResponseEntity<?> contextUpdate(SolutionContextUpdateRequest request) {
         var response = service.contextUpdate(request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_SOLUTION, response);
@@ -40,7 +40,7 @@ public class AdminSolutionController {
      * @return SolutionResponse : Update 된 Solution 에 대한 정보를 가지는 dto
      * */
     @PatchMapping("/difficulty")
-    public ResponseEntity<?> difficultyUpdate(DifficultyUpdateRequest request) {
+    public ResponseEntity<?> difficultyUpdate(SolutionDifficultyUpdateRequest request) {
         var response = service.difficultyUpdate(request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_SOLUTION, response);
@@ -51,7 +51,7 @@ public class AdminSolutionController {
      * @return SolutionResponse : Update 된 Solution 에 대한 정보를 가지는 dto
      * */
     @PatchMapping("/example")
-    public ResponseEntity<?> exampleUpdate(ExampleUpdateRequest request) {
+    public ResponseEntity<?> exampleUpdate(SolutionExampleUpdateRequest request) {
         var response = service.exampleUpdate(request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_SOLUTION, response);
@@ -62,7 +62,7 @@ public class AdminSolutionController {
      * @return SolutionResponse : Update 된 Solution 에 대한 정보를 가지는 dto
      * */
     @PatchMapping
-    public ResponseEntity<?> update(UpdateRequest request) {
+    public ResponseEntity<?> update(SolutionUpdateRequest request) {
         var response = service.updateAll(request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_SOLUTION, response);
@@ -73,7 +73,7 @@ public class AdminSolutionController {
      * @return SolutionResponse : 삭제된 Solution 에 대한 정보를 가지는 dto
      * */
     @DeleteMapping
-    public ResponseEntity<?> delete(DeleteRequest request) {
+    public ResponseEntity<?> delete(SolutionDeleteRequest request) {
         SolutionResponse response = service.delete(request);
         if (response != null) {
             return ResponseDto.toResponseEntity(ResponseMessage.DELETE_SUCCESS_SOLUTION, response);
@@ -87,7 +87,7 @@ public class AdminSolutionController {
      * @return SolutionResponse : 등록된 Solution 에 대한 정보를 가지는 dto
      * */
     @GetMapping
-    public ResponseEntity<?> register(RegisterRequest request) {
+    public ResponseEntity<?> register(SolutionRegisterRequest request) {
         var response = service.register(request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.CREATE_SUCCESS_SOLUTION, response);

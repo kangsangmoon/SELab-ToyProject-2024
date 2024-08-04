@@ -2,8 +2,8 @@ package com.example.project.solution.controller;
 
 import com.example.project.common.dto.ResponseDto;
 import com.example.project.common.dto.ResponseMessage;
-import com.example.project.solution.dto.request.user.CompileRequest;
-import com.example.project.solution.dto.request.user.FindRequest;
+import com.example.project.solution.dto.request.user.SolutionCompileRequest;
+import com.example.project.solution.dto.request.user.SolutionFindRequest;
 import com.example.project.solution.service.UserSolutionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ public class UserSolutionController {
      * TODO 컴파일 부분을 완성하여 리턴값을 가져올 수 있도록 해야한다
      * */
     @PostMapping
-    public ResponseEntity<?> compile(CompileRequest request){
+    public ResponseEntity<?> compile(SolutionCompileRequest request){
         return null;
     }
 
@@ -44,7 +44,7 @@ public class UserSolutionController {
      * @return SolutionResponse : 찾은 문제에 대한 정보를 가진 dto
      * */
     @GetMapping
-    public ResponseEntity<?> findSolution(FindRequest request){
+    public ResponseEntity<?> findSolution(SolutionFindRequest request){
         var response = service.findSolution(request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.READ_SUCCESS_SOLUTION, response);

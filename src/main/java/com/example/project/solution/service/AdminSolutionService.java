@@ -1,12 +1,12 @@
 package com.example.project.solution.service;
 
 import com.example.project.solution.dto.SolutionResponse;
-import com.example.project.solution.dto.request.admin.DeleteRequest;
-import com.example.project.solution.dto.request.admin.RegisterRequest;
-import com.example.project.solution.dto.request.admin.update.ContextUpdateRequest;
-import com.example.project.solution.dto.request.admin.update.DifficultyUpdateRequest;
-import com.example.project.solution.dto.request.admin.update.ExampleUpdateRequest;
-import com.example.project.solution.dto.request.admin.update.UpdateRequest;
+import com.example.project.solution.dto.request.admin.SolutionDeleteRequest;
+import com.example.project.solution.dto.request.admin.SolutionRegisterRequest;
+import com.example.project.solution.dto.request.admin.update.SolutionContextUpdateRequest;
+import com.example.project.solution.dto.request.admin.update.SolutionDifficultyUpdateRequest;
+import com.example.project.solution.dto.request.admin.update.SolutionExampleUpdateRequest;
+import com.example.project.solution.dto.request.admin.update.SolutionUpdateRequest;
 import com.example.project.solution.domain.Solution;
 import com.example.project.error.exception.solution.SolutionException;
 import com.example.project.solution.repository.SolutionRepository;
@@ -20,23 +20,14 @@ public class AdminSolutionService {
     private SolutionRepository solutionRepository;
 
     @Transactional
-    public SolutionResponse register(RegisterRequest request) {
-        Solution solution = new Solution(
-                request.getDifficulty(),
-                request.getTitle(),
-                request.getDescription(),
-                request.getInExample(),
-                request.getOutExample(),
-                0L
-        );
-
-        Solution savedSolution = solutionRepository.save(solution);
+    public SolutionResponse register(SolutionRegisterRequest request) {
+        Solution savedSolution = solutionRepository.save(request.toEntity());
 
         return savedSolution.toResponseDto();
     }
 
     @Transactional
-    public SolutionResponse delete(DeleteRequest request) {
+    public SolutionResponse delete(SolutionDeleteRequest request) {
         if (request.getAdminId().equals("admin")) {
             if (solutionRepository.existsById(request.getSolutionId())) {
                 Solution solution = solutionRepository.findById(request.getSolutionId()).orElseThrow(SolutionException::new);
@@ -52,7 +43,7 @@ public class AdminSolutionService {
     }
 
     @Transactional
-    public SolutionResponse contextUpdate(ContextUpdateRequest request) {
+    public SolutionResponse contextUpdate(SolutionContextUpdateRequest request) {
         if (isAdmin(request.getAdminId())) {
             Solution solution = solutionRepository.findById(request.getSolutionId())
                     .orElseThrow(SolutionException::new);
@@ -66,7 +57,7 @@ public class AdminSolutionService {
     }
 
     @Transactional
-    public SolutionResponse difficultyUpdate(DifficultyUpdateRequest request) {
+    public SolutionResponse difficultyUpdate(SolutionDifficultyUpdateRequest request) {
         if (isAdmin(request.getAdminId())) {
             Solution solution = solutionRepository.findById(request.getSolutionId())
                     .orElseThrow(SolutionException::new);
@@ -79,7 +70,7 @@ public class AdminSolutionService {
     }
 
     @Transactional
-    public SolutionResponse exampleUpdate(ExampleUpdateRequest request) {
+    public SolutionResponse exampleUpdate(SolutionExampleUpdateRequest request) {
         if (isAdmin(request.getAdminId())) {
             Solution solution = solutionRepository.findById(request.getSolutionId())
                     .orElseThrow(SolutionException::new);
@@ -92,7 +83,7 @@ public class AdminSolutionService {
     }
 
     @Transactional
-    public SolutionResponse updateAll(UpdateRequest request) {
+    public SolutionResponse updateAll(SolutionUpdateRequest request) {
         if (isAdmin(request.getAdminId())) {
             Solution solution = solutionRepository.findById(request.getSolutionId())
                     .orElseThrow(SolutionException::new);

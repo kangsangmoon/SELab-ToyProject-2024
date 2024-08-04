@@ -4,6 +4,6 @@ import com.example.project.solution.domain.Difficulty;
 import lombok.Data;
 
 @Data
-public class DifficultyFindRequest {
+public class SolutionDifficultyFindRequest {
     private Difficulty difficulty;
 }
