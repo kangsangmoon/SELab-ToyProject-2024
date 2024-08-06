@@ -72,7 +72,7 @@ public class BoardApiController {
      * @return BoardResponse : Update한 Board에 대한 정보를 가진 dto
      * */
     @PutMapping
-    public ResponseEntity<?> update(BoardUpdateRequest request) {
+    public ResponseEntity<?> update(@RequestBody BoardUpdateRequest request) {
         var response = boardService.update(request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_BOARD, response);
@@ -84,7 +84,7 @@ public class BoardApiController {
      * @return BoardResponse : 삭제된 Board에 대한 정보를 가진 dto
      * */
     @DeleteMapping
-    public ResponseEntity<ResponseDto<BoardResponse>> delete(BoardDeleteRequest request) {
+    public ResponseEntity<ResponseDto<BoardResponse>> delete(@RequestBody BoardDeleteRequest request) {
         BoardResponse delete = boardService.delete(request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.DELETE_SUCCESS_BOARD,delete);
