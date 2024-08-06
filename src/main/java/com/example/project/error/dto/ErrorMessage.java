@@ -30,7 +30,6 @@ public enum ErrorMessage {
     INVALID_EMAIL_REGEX_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 이메일 형식입니다"),
     INVALID_PASSWORD_REGEX_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 비밀번호 형식입니다"),
     INVALID_NAME_REGEX_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 이름 형식 입니다"),
-    INVALID_CLASS_NUMBER_REGEX_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 학번 형식 입니다"),
     NOT_EXIST_USER_INFO_EXCEPTION(HttpStatus.NOT_FOUND, "유저 정보가 존재하지 않습니다"),
     NOT_EXIST_MEMBER_EXCEPTION(HttpStatus.NOT_FOUND, "해당 유저가 존재하지 않습니다"),
     INVALID_PASSWORD_MATCH_EXCEPTION(HttpStatus.BAD_REQUEST, "비밀번호가 맞지 않습니다"),
@@ -47,7 +46,16 @@ public enum ErrorMessage {
     //BOARD
     DUPLICATE_BOARD_NAME_DUPLICATE(HttpStatus.BAD_REQUEST, "중복된 이름을 가진 Board가 있습니다"),
     BOARD_NOT_EXIST(HttpStatus.NOT_FOUND, "Board 가 존재하지 않습니다"),
-    ID_NOT_MATCH_TO_DELETE_BOARD(HttpStatus.BAD_REQUEST, "작성자와 요청자 ID가 일치하지 않아 삭제하지 못했습니다");
+    ID_NOT_MATCH_TO_DELETE_BOARD(HttpStatus.BAD_REQUEST, "작성자와 요청자 ID가 일치하지 않아 삭제하지 못했습니다"),
+
+
+    //COMMENT
+    ID_NOT_MATCH_TO_DELETE_COMMENT(HttpStatus.BAD_REQUEST, "작성자와 요청자의 ID가 일치하지 않아 삭제하지 못했습니다"),
+    NOT_EXIST_COMMENT_INFO_EXCEPTION(HttpStatus.BAD_REQUEST, "요청한 Comment를 찾을 수 없습니다")
+
+
+
+    ;
 
 
     private final HttpStatus status;
