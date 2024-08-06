@@ -1,4 +1,4 @@
-package com.example.project.solution.domain;
+package com.example.project.solution.domain.vo;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
