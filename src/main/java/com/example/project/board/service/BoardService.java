@@ -46,7 +46,7 @@ public class BoardService {
                 .findById(request.getId())
                 .orElseThrow(InvalidBoardIdException::new);
 
-        if (board.getId().equals(request.getUserId())) {
+        if (board.getUserId().equals(request.getUserId())) {
             board.updateBoard(request.getTitle(), request.getContext());
             return board.toResponseDto();
         } else {

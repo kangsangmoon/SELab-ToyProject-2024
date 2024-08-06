@@ -22,13 +22,13 @@ public class Board extends BaseEntity implements Domain<BoardResponse> {
     private String context;
 
     @Column
-    private String userId;
+    private Long userId;
 
     @Column
     private Long solutionId;
 
     @Builder
-    public Board(String title, String context, String userId, Long solutionId) {
+    public Board(String title, String context, Long userId, Long solutionId) {
         this.title = title;
         this.context = context;
         this.userId = userId;
