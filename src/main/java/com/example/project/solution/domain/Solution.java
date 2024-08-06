@@ -3,10 +3,7 @@ package com.example.project.solution.domain;
 import com.example.project.common.BaseEntity;
 import com.example.project.restrictions.Domain;
 import com.example.project.solution.dto.SolutionResponse;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +16,7 @@ public class Solution extends BaseEntity implements Domain<SolutionResponse> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated
     private Difficulty difficulty;
     private String title;
     private String description;
