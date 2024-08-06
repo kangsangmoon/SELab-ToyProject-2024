@@ -1,6 +1,6 @@
 package com.example.project.solution.repository;
 
-import com.example.project.solution.domain.Difficulty;
+import com.example.project.solution.domain.vo.Difficulty;
 import com.example.project.solution.domain.Solution;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;

@@ -1,7 +1,7 @@
 package com.example.project.solution.dto;
 
 import com.example.project.restrictions.ResponseDto;
-import com.example.project.solution.domain.Difficulty;
+import com.example.project.solution.domain.vo.Difficulty;
 import com.example.project.solution.domain.Solution;
 import lombok.Builder;
 import lombok.Data;
