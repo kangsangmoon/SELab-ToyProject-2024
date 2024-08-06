@@ -92,6 +92,6 @@ public class BoardService {
         if (board.getUserId().equals(request.getUserId())) {
             boardRepository.delete(board);
             return board.toResponseDto();
-        }else throw new IdNotMatchException(ErrorMessage.ID_NOT_MATCH_TO_DELETE_BOARD,"작성자 ID와 요청자 ID가 달라서 삭제할 수 없습니다");
+        }else throw new BoardIdNotMatchException(ErrorMessage.ID_NOT_MATCH_TO_DELETE_BOARD,"작성자 ID와 요청자 ID가 달라서 삭제할 수 없습니다");
     }
 }
