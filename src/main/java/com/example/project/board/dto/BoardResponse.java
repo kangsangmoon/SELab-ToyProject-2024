@@ -12,11 +12,11 @@ public class BoardResponse implements ResponseDto<Board> {
     private Long id;
     private String title;
     private String context;
-    private String userId;
+    private Long userId;
     private Long solutionId;
 
     @Builder
-    public BoardResponse(Long id, String title, String context, String userId, Long solutionId) {
+    public BoardResponse(Long id, String title, String context, Long userId, Long solutionId) {
         this.id = id;
         this.title = title;
         this.context = context;
