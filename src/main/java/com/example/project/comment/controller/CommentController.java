@@ -4,14 +4,12 @@ import com.example.project.comment.dto.CommentRegisterRequest;
 import com.example.project.comment.dto.CommentResponse;
 import com.example.project.comment.service.CommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController(value = "/comment")
+@RestController
+@RequestMapping(value = "/comment")
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
