@@ -35,7 +35,7 @@ public class UserSolutionController {
      * TODO 컴파일 부분을 완성하여 리턴값을 가져올 수 있도록 해야한다
      * */
     @PostMapping
-    public ResponseEntity<?> compile(SolutionCompileRequest request){
+    public ResponseEntity<?> compile(@RequestBody SolutionCompileRequest request){
         return null;
     }
 
@@ -44,7 +44,7 @@ public class UserSolutionController {
      * @return SolutionResponse : 찾은 문제에 대한 정보를 가진 dto
      * */
     @GetMapping
-    public ResponseEntity<?> findSolution(SolutionFindRequest request){
+    public ResponseEntity<?> findSolution(@RequestBody SolutionFindRequest request){
         var response = service.read(request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.READ_SUCCESS_SOLUTION, response);

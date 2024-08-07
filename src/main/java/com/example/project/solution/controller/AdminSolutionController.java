@@ -29,7 +29,7 @@ public class AdminSolutionController {
      * @return SolutionResponse : Update 된 Solution 에 대한 정보를 가지는 dto
      * */
     @PatchMapping("/context")
-    public ResponseEntity<?> contextUpdate(SolutionContextUpdateRequest request) {
+    public ResponseEntity<?> contextUpdate(@RequestBody SolutionContextUpdateRequest request) {
         var response = service.contextUpdate(request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_SOLUTION, response);
@@ -40,7 +40,7 @@ public class AdminSolutionController {
      * @return SolutionResponse : Update 된 Solution 에 대한 정보를 가지는 dto
      * */
     @PatchMapping("/difficulty")
-    public ResponseEntity<?> difficultyUpdate(SolutionDifficultyUpdateRequest request) {
+    public ResponseEntity<?> difficultyUpdate(@RequestBody SolutionDifficultyUpdateRequest request) {
         var response = service.difficultyUpdate(request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_SOLUTION, response);
@@ -51,7 +51,7 @@ public class AdminSolutionController {
      * @return SolutionResponse : Update 된 Solution 에 대한 정보를 가지는 dto
      * */
     @PatchMapping("/example")
-    public ResponseEntity<?> exampleUpdate(SolutionExampleUpdateRequest request) {
+    public ResponseEntity<?> exampleUpdate(@RequestBody SolutionExampleUpdateRequest request) {
         var response = service.exampleUpdate(request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_SOLUTION, response);
@@ -62,7 +62,7 @@ public class AdminSolutionController {
      * @return SolutionResponse : Update 된 Solution 에 대한 정보를 가지는 dto
      * */
     @PatchMapping
-    public ResponseEntity<?> update(SolutionUpdateRequest request) {
+    public ResponseEntity<?> update(@RequestBody SolutionUpdateRequest request) {
         var response = service.updateAll(request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.UPDATE_SUCCESS_SOLUTION, response);
