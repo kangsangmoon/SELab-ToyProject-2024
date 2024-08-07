@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class AdminSolutionService {
-    private SolutionRepository solutionRepository;
+    private final SolutionRepository solutionRepository;
 
     @Transactional
     public SolutionResponse register(SolutionRegisterRequest request) {
