@@ -8,7 +8,7 @@ public class BoardUpdateRequest {
     @NotNull
     private Long id;
     @NotNull
-    private String userId;
+    private Long userId;
     @NotNull
     private String title;
     @NotNull

@@ -7,7 +7,7 @@ import lombok.Data;
 public class BoardDeleteRequest {
 
     @NotNull
-    private String userId;
+    private  Long userId;
     @NotNull
     private Long boardId;
 }

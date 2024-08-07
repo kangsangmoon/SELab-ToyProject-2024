@@ -12,7 +12,7 @@ public class BoardRegisterRequest implements RegisterRequest<Board> {
     @NotNull
     private String context;
     @NotNull
-    private String userId;
+    private Long userId;
     @NotNull
     private Long solutionId;
 
