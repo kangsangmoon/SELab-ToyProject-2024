@@ -25,7 +25,7 @@ public class CommentController {
     }
 
     @PostMapping
-    public CommentResponse register(CommentRegisterRequest request){
+    public CommentResponse register(@RequestBody CommentRegisterRequest request){
         return  commentService.register(request);
     }
 }
