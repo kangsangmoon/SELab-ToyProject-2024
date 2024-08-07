@@ -9,10 +9,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 public class Comment extends BaseEntity implements Domain<CommentResponse> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
