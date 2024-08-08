@@ -73,7 +73,7 @@ public class AdminSolutionController {
      * @return SolutionResponse : 삭제된 Solution 에 대한 정보를 가지는 dto
      * */
     @DeleteMapping
-    public ResponseEntity<?> delete(SolutionDeleteRequest request) {
+    public ResponseEntity<?> delete(@RequestBody SolutionDeleteRequest request) {
         SolutionResponse response = service.delete(request);
         if (response != null) {
             return ResponseDto.toResponseEntity(ResponseMessage.DELETE_SUCCESS_SOLUTION, response);
@@ -87,7 +87,7 @@ public class AdminSolutionController {
      * @return SolutionResponse : 등록된 Solution 에 대한 정보를 가지는 dto
      * */
     @GetMapping
-    public ResponseEntity<?> register(SolutionRegisterRequest request) {
+    public ResponseEntity<?> register(@RequestBody SolutionRegisterRequest request) {
         var response = service.register(request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.CREATE_SUCCESS_SOLUTION, response);
