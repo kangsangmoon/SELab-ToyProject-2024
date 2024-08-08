@@ -32,7 +32,7 @@ public class UserController {
 
     //TODO 쿠키를 남긴다
     @PostMapping("/login")
-    public String login(LoginRequest loginRequest, Model model) {
+    public String login(@RequestBody LoginRequest loginRequest, Model model) {
         log.info("[ SYSTEM ] Login Tried ID : {}", loginRequest.getUserId());
         log.info("[ SYSTEM ] Login Tried PASSWORD : {}", loginRequest.getPassword());
 
