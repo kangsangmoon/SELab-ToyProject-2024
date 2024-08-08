@@ -28,6 +28,8 @@ public class UserRegisterRequest implements RegisterRequest<User> {
                 .userId(userId)
                 .password(password)
                 .name(name)
+                .point(point)
+                .roleType(roleType)
                 .build();
     }
 }
