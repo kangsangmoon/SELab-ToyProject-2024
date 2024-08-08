@@ -17,7 +17,7 @@ public class UserRegisterRequest implements RegisterRequest<User> {
     @NotNull
     private String email;
     @NotNull
-    private Long point = 0l;
+    private Long point = 0L;
     @NotNull
     private RoleType roleType = RoleType.USER;
 
