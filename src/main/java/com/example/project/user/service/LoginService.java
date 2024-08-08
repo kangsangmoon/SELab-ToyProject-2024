@@ -8,6 +8,7 @@ import com.example.project.user.dto.UserResponse;
 import com.example.project.user.dto.login.LoginRequest;
 import com.example.project.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class LoginService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public UserResponse login(LoginRequest request){
@@ -25,7 +27,7 @@ public class LoginService {
                 }
         );
 
-        if(user.getPassword().equals(request.getPassword())){
+        if (passwordEncoder.matches(request.getPassword(), user.getPassword())){
             return user.toResponseDto();
         }else throw new InvalidLoginPasswordException(ErrorMessage.INVALID_PASSWORD_TO_LOGIN,"PASSWORD가 일치하지 않습니다");
     }
