@@ -2,6 +2,7 @@ package com.example.project.user.dto.request;
 
 import com.example.project.restrictions.RegisterRequest;
 import com.example.project.user.domain.User;
+import com.example.project.user.domain.vo.RoleType;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -15,6 +16,10 @@ public class UserRegisterRequest implements RegisterRequest<User> {
     private String name;
     @NotNull
     private String email;
+    @NotNull
+    private Long point = 0l;
+    @NotNull
+    private RoleType roleType = RoleType.USER;
 
     @Override
     public User toEntity(){
@@ -23,6 +28,8 @@ public class UserRegisterRequest implements RegisterRequest<User> {
                 .userId(userId)
                 .password(password)
                 .name(name)
+                .point(point)
+                .roleType(roleType)
                 .build();
     }
 }
