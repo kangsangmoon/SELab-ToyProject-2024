@@ -1,15 +1,12 @@
 package com.example.project.solution.controller;
 
-import com.example.project.board.common.dto.PageDto;
-import com.example.project.solution.dto.request.user.CompileRequest;
-import com.example.project.solution.dto.request.user.FindRequest;
-import com.example.project.solution.dto.request.user.filter_find.DifficultyFindRequest;
+import com.example.project.common.dto.ResponseDto;
+import com.example.project.common.dto.ResponseMessage;
+import com.example.project.solution.dto.request.user.SolutionCompileRequest;
+import com.example.project.solution.dto.request.user.SolutionFindRequest;
 import com.example.project.solution.service.UserSolutionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,15 +30,23 @@ public class UserSolutionController {
         return PageDto.ok(byDifficulty);
     }*/
 
+    /**
+     * @param request : 컴파일할 코드를 가진 dto
+     * TODO 컴파일 부분을 완성하여 리턴값을 가져올 수 있도록 해야한다
+     * */
     @PostMapping
-    public ResponseEntity<?> compile(CompileRequest request){
+    public ResponseEntity<?> compile(@RequestBody SolutionCompileRequest request){
         return null;
     }
 
+    /**
+     * @param request : Solution에 대한 정보를 찾는 요청을 하는 dto
+     * @return SolutionResponse : 찾은 문제에 대한 정보를 가진 dto
+     * */
     @GetMapping
-    public ResponseEntity<?> findSolution(FindRequest request){
-        var response = service.findSolution(request);
+    public ResponseEntity<?> findSolution(@RequestBody SolutionFindRequest request){
+        var response = service.read(request);
 
-        return ResponseEntity.ok(response);
+        return ResponseDto.toResponseEntity(ResponseMessage.READ_SUCCESS_SOLUTION, response);
     }
 }

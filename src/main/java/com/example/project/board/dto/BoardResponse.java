@@ -1,26 +1,37 @@
 package com.example.project.board.dto;
 
-import com.example.project.board.entity.Board;
-import lombok.AllArgsConstructor;
+import com.example.project.board.domain.Board;
+import com.example.project.restrictions.ResponseDto;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-public class BoardResponse {
+@NoArgsConstructor
+public class BoardResponse implements ResponseDto<Board> {
     private Long id;
     private String title;
     private String context;
-    private String userId;
+    private Long userId;
     private Long solutionId;
 
+    @Builder
+    public BoardResponse(Long id, String title, String context, Long userId, Long solutionId) {
+        this.id = id;
+        this.title = title;
+        this.context = context;
+        this.userId = userId;
+        this.solutionId = solutionId;
+    }
 
-    public static BoardResponse from(Board board){
-        return new BoardResponse(
-                board.getId(),
-                board.getTitle(),
-                board.getContext(),
-                board.getUserId(),
-                board.getSolutionId()
+    @Override
+    public Board toEntity() {
+        return new Board(
+                this.id,
+                this.title,
+                this.context,
+                this.userId,
+                this.solutionId
         );
     }
 }

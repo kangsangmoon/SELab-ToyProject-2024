@@ -1,16 +1,17 @@
 package com.example.project.solution.service;
 
 import com.example.project.solution.dto.SolutionResponse;
-import com.example.project.solution.dto.request.user.FindRequest;
-import com.example.project.solution.dto.request.user.filter_find.DifficultyFindRequest;
-import com.example.project.solution.entity.Solution;
-import com.example.project.exception.SolutionException;
+import com.example.project.solution.dto.request.user.SolutionFindRequest;
+import com.example.project.solution.domain.Solution;
+import com.example.project.error.exception.solution.SolutionException;
 import com.example.project.solution.repository.SolutionRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,17 +20,17 @@ public class UserSolutionService {
     private final SolutionRepository solutionRepository;
 
     @Transactional(readOnly = true)
-    public Page<SolutionResponse> findAll(Pageable pageable) {
+    public List<SolutionResponse> readAll(Pageable pageable) {
         return solutionRepository
-                .findAll(pageable)
-                .map(SolutionResponse::from);
+                .findAll(pageable).stream()
+                .map(Solution::toResponseDto).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public SolutionResponse findSolution(FindRequest request) {
+    public SolutionResponse read(SolutionFindRequest request) {
         Solution solution = solutionRepository.findById(request.getSolutionId()).orElseThrow(SolutionException::new);
 
-        return SolutionResponse.from(solution);
+        return solution.toResponseDto();
     }
 
    /* @Transactional(readOnly = true)

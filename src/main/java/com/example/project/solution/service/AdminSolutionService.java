@@ -1,14 +1,14 @@
 package com.example.project.solution.service;
 
 import com.example.project.solution.dto.SolutionResponse;
-import com.example.project.solution.dto.request.admin.DeleteRequest;
-import com.example.project.solution.dto.request.admin.RegisterRequest;
-import com.example.project.solution.dto.request.admin.update.ContextUpdateRequest;
-import com.example.project.solution.dto.request.admin.update.DifficultyUpdateRequest;
-import com.example.project.solution.dto.request.admin.update.ExampleUpdateRequest;
-import com.example.project.solution.dto.request.admin.update.UpdateRequest;
-import com.example.project.solution.entity.Solution;
-import com.example.project.exception.SolutionException;
+import com.example.project.solution.dto.request.admin.SolutionDeleteRequest;
+import com.example.project.solution.dto.request.admin.SolutionRegisterRequest;
+import com.example.project.solution.dto.request.admin.update.SolutionContextUpdateRequest;
+import com.example.project.solution.dto.request.admin.update.SolutionDifficultyUpdateRequest;
+import com.example.project.solution.dto.request.admin.update.SolutionExampleUpdateRequest;
+import com.example.project.solution.dto.request.admin.update.SolutionUpdateRequest;
+import com.example.project.solution.domain.Solution;
+import com.example.project.error.exception.solution.SolutionException;
 import com.example.project.solution.repository.SolutionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,37 +17,25 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class AdminSolutionService {
-    private SolutionRepository solutionRepository;
+    private final SolutionRepository solutionRepository;
 
     @Transactional
-    public SolutionResponse register(RegisterRequest request) {
-        Solution solution = new Solution(
-                request.getDifficulty(),
-                request.getTitle(),
-                request.getDescription(),
-                request.getInExample(),
-                request.getOutExample(),
-                0L
-        );
+    public SolutionResponse register(SolutionRegisterRequest request) {
+        Solution savedSolution = solutionRepository.save(request.toEntity());
 
-        Solution savedSolution = solutionRepository.save(solution);
-
-        return SolutionResponse.from(savedSolution);
+        return savedSolution.toResponseDto();
     }
 
     @Transactional
-    public boolean delete(DeleteRequest request) {
+    public SolutionResponse delete(SolutionDeleteRequest request) {
         if (request.getAdminId().equals("admin")) {
             if (solutionRepository.existsById(request.getSolutionId())) {
+                Solution solution = solutionRepository.findById(request.getSolutionId()).orElseThrow(SolutionException::new);
                 solutionRepository.deleteById(request.getSolutionId());
-                return true;
+                return solution.toResponseDto();
             }
         }
-        return false;
-    }
-
-    private Solution findBySolutionId(Long solutionId) {
-        return solutionRepository.findById(solutionId).orElseThrow(SolutionException::new);
+        return null;
     }
 
     private boolean isAdmin(String id) {
@@ -55,46 +43,50 @@ public class AdminSolutionService {
     }
 
     @Transactional
-    public SolutionResponse contextUpdate(ContextUpdateRequest request) {
+    public SolutionResponse contextUpdate(SolutionContextUpdateRequest request) {
         if (isAdmin(request.getAdminId())) {
-            Solution solution = findBySolutionId(request.getSolutionId());
+            Solution solution = solutionRepository.findById(request.getSolutionId())
+                    .orElseThrow(SolutionException::new);
 
             solution.updateContext(request.getTitle(), request.getDescription());
 
-            return SolutionResponse.from(solution);
+            return solution.toResponseDto();
         }
 
         return null;
     }
 
     @Transactional
-    public SolutionResponse difficultyUpdate(DifficultyUpdateRequest request) {
+    public SolutionResponse difficultyUpdate(SolutionDifficultyUpdateRequest request) {
         if (isAdmin(request.getAdminId())) {
-            Solution solution = findBySolutionId(request.getSolutionId());
+            Solution solution = solutionRepository.findById(request.getSolutionId())
+                    .orElseThrow(SolutionException::new);
 
             solution.updateDifficulty(request.getDifficulty());
 
-            return SolutionResponse.from(solution);
+            return solution.toResponseDto();
         }
         return null;
     }
 
     @Transactional
-    public SolutionResponse exampleUpdate(ExampleUpdateRequest request) {
+    public SolutionResponse exampleUpdate(SolutionExampleUpdateRequest request) {
         if (isAdmin(request.getAdminId())) {
-            Solution solution = findBySolutionId(request.getSolutionId());
+            Solution solution = solutionRepository.findById(request.getSolutionId())
+                    .orElseThrow(SolutionException::new);
 
             solution.updateExample(request.getInExample(), request.getOutExample());
 
-            return SolutionResponse.from(solution);
+            return solution.toResponseDto();
         }
         return null;
     }
 
     @Transactional
-    public SolutionResponse updateAll(UpdateRequest request) {
+    public SolutionResponse updateAll(SolutionUpdateRequest request) {
         if (isAdmin(request.getAdminId())) {
-            Solution solution = findBySolutionId(request.getSolutionId());
+            Solution solution = solutionRepository.findById(request.getSolutionId())
+                    .orElseThrow(SolutionException::new);
 
             solution.update(
                     request.getDifficulty(),
@@ -104,7 +96,7 @@ public class AdminSolutionService {
                     request.getOutExample()
             );
 
-            return SolutionResponse.from(solution);
+            return solution.toResponseDto();
         }
         return null;
     }
