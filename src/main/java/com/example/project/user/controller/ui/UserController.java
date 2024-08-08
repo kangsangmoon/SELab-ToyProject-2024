@@ -32,7 +32,7 @@ public class UserController {
 
     //TODO 쿠키를 남긴다
     @PostMapping("/login")
-    public String login(LoginRequest loginRequest, Model model) {
+    public String login(@RequestBody LoginRequest loginRequest, Model model) {
         log.info("[ SYSTEM ] Login Tried ID : {}", loginRequest.getUserId());
         log.info("[ SYSTEM ] Login Tried PASSWORD : {}", loginRequest.getPassword());
 
@@ -78,11 +78,11 @@ public class UserController {
 
     //TODO 토큰 인증으로 유저 정보 수정하도록 만들기
     @PostMapping("/edit/{id}")
-    public String edit(UserUpdateRequest request, Model model, @PathVariable Long id){
+    public String edit(@RequestBody UserUpdateRequest request, Model model, @PathVariable Long id){
+        log.info("request" +request);
         UserResponse userResponse = userService.read(id);
         UserDetail userDetail = new UserDetail(userResponse.toEntity());
         var edit = userService.updateUser(userDetail, request);
-
         model.addAttribute("UserInfo", edit);
 
         return "/authentication/user/info/info";
