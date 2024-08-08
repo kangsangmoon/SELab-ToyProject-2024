@@ -49,11 +49,12 @@ public class User extends BaseEntity implements Domain<UserResponse> {
 
 
     @Builder
-    public User(String email, String userId, String password, String name, RoleType roleType) {
+    public User(String email, String userId, String password, String name,Long point, RoleType roleType) {
         this.userId = userId;
         this.email = new Email(email);
         this.password = password;
         this.name = new Name(name);
+        this.point = point;
         this.roleType = roleType;
     }
 
@@ -66,6 +67,7 @@ public class User extends BaseEntity implements Domain<UserResponse> {
                 .name(name)
                 .point(point)
                 .email(email)
+                .roleType(roleType)
                 .build();
     }
 
