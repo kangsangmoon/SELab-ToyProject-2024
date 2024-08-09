@@ -16,10 +16,6 @@ public class UserRegisterRequest implements RegisterRequest<User> {
     private String name;
     @NotNull
     private String email;
-    @NotNull
-    private Long point = 0L;
-    @NotNull
-    private RoleType roleType = RoleType.USER;
 
     @Override
     public User toEntity(){
@@ -28,8 +24,8 @@ public class UserRegisterRequest implements RegisterRequest<User> {
                 .userId(userId)
                 .password(password)
                 .name(name)
-                .point(point)
-                .roleType(roleType)
+                .point(0L)
+                .roleType(RoleType.USER)
                 .build();
     }
 }
