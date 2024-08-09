@@ -18,11 +18,11 @@ public class SolutionRecordRegisterRequest implements RegisterRequest<SolutionRe
 
     @Override
     public SolutionRecord toEntity() {
-        return new SolutionRecord(
-                this.userId,
-                this.solutionId,
-                this.code,
-                this.successOrNot
-        );
+        return SolutionRecord.builder()
+                .userId(userId)
+                .solutionId(solutionId)
+                .code(code)
+                .successOrNot(successOrNot)
+                .build();
     }
 }
