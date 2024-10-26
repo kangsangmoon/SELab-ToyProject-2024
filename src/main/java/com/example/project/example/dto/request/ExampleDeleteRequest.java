@@ -1,4 +1,4 @@
-package com.example.project.solution.dto.request.admin;
+package com.example.project.example.dto.request;
 
 import lombok.Data;
 
