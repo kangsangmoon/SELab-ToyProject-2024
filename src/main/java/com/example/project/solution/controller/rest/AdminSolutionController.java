@@ -1,7 +1,5 @@
 package com.example.project.solution.controller.rest;
 
-import com.example.project.solution.dto.request.admin.ExampleDeleteRequest;
-import com.example.project.solution.dto.request.admin.ExampleRegisterRequest;
 import com.example.project.common.dto.ResponseDto;
 import com.example.project.common.dto.ResponseMessage;
 import com.example.project.solution.dto.request.admin.*;
@@ -55,24 +53,5 @@ public class AdminSolutionController {
         var response = service.register(request);
         log.info("Admin  -> Solution {} Register", response.getId());
         return ResponseDto.toResponseEntity(ResponseMessage.CREATE_SUCCESS_SOLUTION, response);
-    }
-
-    @PostMapping("/{solutionId}/examples")
-    public ResponseEntity<?> addExampleToSolution(@PathVariable Long solutionId, @RequestBody ExampleRegisterRequest request) {
-        request.setSolutionId(solutionId);
-        service.addExampleToSolution(request);
-        log.info("InputExample {}", solutionId);
-        return ResponseDto.toResponseEntity(ResponseMessage.CREATE_SUCCESS_EXAMPLE, null);
-    }
-
-    @DeleteMapping("/{solutionId}/examples/{exampleId}")
-    public ResponseEntity<?> removeExampleFromSolution(@PathVariable Long solutionId, @PathVariable Long exampleId) {
-        ExampleDeleteRequest request = new ExampleDeleteRequest();
-        request.setSolutionId(solutionId);
-        request.setExampleId(exampleId);
-
-        service.removeExampleFromSolution(request);
-        log.info("RemoveExample {}", solutionId);
-        return ResponseDto.toResponseEntity(ResponseMessage.DELETE_SUCCESS_SOLUTION, null);
     }
 }

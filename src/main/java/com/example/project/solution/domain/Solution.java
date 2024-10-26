@@ -9,12 +9,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Getter
-@Table(name = "solution")
 @NoArgsConstructor
 public class Solution extends BaseEntity implements Domain<SolutionResponse> {
     @Id
@@ -23,13 +19,8 @@ public class Solution extends BaseEntity implements Domain<SolutionResponse> {
 
     @Enumerated
     private Difficulty difficulty;
-
     private String title;
     private String description;
-
-    @OneToMany(mappedBy = "solution", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Example> examples = new ArrayList<>();
-
     private Long solved;
 
     public Solution(Difficulty difficulty, String title, String description, Long solved) {
@@ -66,13 +57,5 @@ public class Solution extends BaseEntity implements Domain<SolutionResponse> {
                 .title(title)
                 .solved(solved)
                 .build();
-    }
-
-    public void addExample(Example example) {
-        examples.add(example);
-    }
-
-    public void removeExample(Example example) {
-        examples.remove(example);
     }
 }
