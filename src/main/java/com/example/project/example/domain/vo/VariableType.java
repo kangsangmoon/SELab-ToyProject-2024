@@ -1,4 +1,4 @@
-package com.example.project.solution.domain.vo;
+package com.example.project.example.domain.vo;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ public enum VariableType {
         if (value.length() == 1) {
             return value.charAt(0);
         } else {
-            return null; // 예외 처리 예정
+            throw new IllegalArgumentException("Invalid character input");
         }
     }),
     STRING(".*", value -> value);
@@ -34,15 +34,6 @@ public enum VariableType {
 
     public Object convert(String value) {
         return converter.convert(value);
-    }
-
-    public static VariableType determineType(String value) {
-        for (VariableType type : values()) {
-            if (type.matches(value)) {
-                return type;
-            }
-        }
-        return STRING;
     }
 
     @FunctionalInterface
