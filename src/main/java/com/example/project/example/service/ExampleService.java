@@ -53,9 +53,8 @@ public class ExampleService {
                 .collect(Collectors.toList());
     }
 
-    public List<Object> convertExamples(List<String> examples) {
-        return examples.stream()
-                .map(variableTypeSelect::convertExample)
-                .collect(Collectors.toList());
+    public Example getExampleById(Long id) {
+        return exampleRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid example ID: " + id));
     }
 }
