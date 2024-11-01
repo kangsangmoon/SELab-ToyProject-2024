@@ -8,10 +8,10 @@ import com.example.project.compile.dto.CompileRequest;
 import com.example.project.compile.service.CompileService;
 import com.example.project.error.dto.ErrorMessage;
 import com.example.project.error.dto.ErrorResponseDto;
+import com.example.project.example.domain.Example;
 import com.example.project.example.service.ExampleService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.List;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -34,13 +32,20 @@ public class CompileApiController {
     @PostMapping("/compile")
     public ResponseEntity<?> compileCode(@RequestBody CompileRequest request, HttpServletRequest httpServletRequest) throws IOException {
         if (authTokenService.isValidateToken(HeaderUtil.resolveToken(httpServletRequest))) {
-            List<Object> convertedExamples = exampleService.convertExamples(request.getExamples());
+            Long exampleId = request.getExampleId();
+            Example example = exampleService.getExampleById(exampleId);
+
             String result = compileService.compileAndRun(
                     request.getLanguage(),
                     request.getCode(),
-                    convertedExamples
+                    example.getInExample()
             );
-            return ResponseDto.toResponseEntity(ResponseMessage.COMPILE_SUCCESS, result);
-        } else return ErrorResponseDto.of(ErrorMessage.NOT_FOUND_CLIENT_ID_HEADER);
+
+            if (result.equals(example.getOutExample())) {
+                return ResponseDto.toResponseEntity(ResponseMessage.CORRECT_ANSWER, result);
+            }
+            return ResponseDto.toResponseEntity(ResponseMessage.WRONG_ANSWER, result);
+        }
+        return ErrorResponseDto.of(ErrorMessage.NOT_FOUND_CLIENT_ID_HEADER);
     }
 }
