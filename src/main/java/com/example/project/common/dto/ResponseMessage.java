@@ -48,6 +48,8 @@ public enum ResponseMessage {
     IO_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "입출력 오류 발생"),
     EXECUTION_INTERRUPTED(HttpStatus.INTERNAL_SERVER_ERROR, "코드 실행 중단됨"),
     GENERAL_COMPILE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "컴파일 과정에서 일반 오류 발생"),
+    CORRECT_ANSWER(HttpStatus.OK, "정답"),
+    WRONG_ANSWER(HttpStatus.OK, "오답");
 
     ;
 
