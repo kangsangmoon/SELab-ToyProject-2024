@@ -1,9 +1,7 @@
 package com.example.project.solution.service;
 
+import com.example.project.solution.dto.request.admin.*;
 import com.example.project.solution.dto.response.SolutionResponse;
-import com.example.project.solution.dto.request.admin.SolutionDeleteRequest;
-import com.example.project.solution.dto.request.admin.SolutionRegisterRequest;
-import com.example.project.solution.dto.request.admin.SolutionUpdateRequest;
 import com.example.project.solution.domain.Solution;
 import com.example.project.error.exception.solution.SolutionException;
 import com.example.project.solution.repository.SolutionRepository;
@@ -16,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class AdminSolutionService {
     private final SolutionRepository solutionRepository;
+
 
     @Transactional
     public SolutionResponse register(SolutionRegisterRequest request) {
@@ -43,9 +42,7 @@ public class AdminSolutionService {
         solution.update(
                 request.getDifficulty(),
                 request.getTitle(),
-                request.getDescription(),
-                request.getInExample(),
-                request.getOutExample()
+                request.getDescription()
         );
         return solution.toResponseDto();
     }

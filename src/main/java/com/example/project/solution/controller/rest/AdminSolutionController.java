@@ -2,12 +2,9 @@ package com.example.project.solution.controller.rest;
 
 import com.example.project.common.dto.ResponseDto;
 import com.example.project.common.dto.ResponseMessage;
+import com.example.project.solution.dto.request.admin.*;
 import com.example.project.solution.dto.response.SolutionResponse;
-import com.example.project.solution.dto.request.admin.SolutionDeleteRequest;
-import com.example.project.solution.dto.request.admin.SolutionRegisterRequest;
-import com.example.project.solution.dto.request.admin.SolutionUpdateRequest;
 import com.example.project.solution.service.AdminSolutionService;
-import com.example.project.user.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
