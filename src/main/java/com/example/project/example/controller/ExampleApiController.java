@@ -33,17 +33,4 @@ public class ExampleApiController {
         }
         return ResponseDto.toResponseEntity(ResponseMessage.EXAMPLE_DELETEION_FAILED, null);
     }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findExample(@PathVariable Long id, @RequestBody Long exampleId) {
-        var response = exampleService.read(id, exampleId);
-        return ResponseDto.toResponseEntity(ResponseMessage.EXAMPLE_READ_SUCCESS, response);
-    }
-
-
-    @GetMapping("/{id}/all")
-    public ResponseEntity<?> findAllExample(@PathVariable Long id) {
-        var response = exampleService.readAll(id);
-        return ResponseDto.toResponseEntity(ResponseMessage.ALL_EXAMPLE_READ_SUCCESS, response);
-    }
 }
