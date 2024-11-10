@@ -6,5 +6,4 @@ import lombok.Data;
 public class CompileRequest {
     private String language;
     private String code;
-    private Long exampleId;
 }
