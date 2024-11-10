@@ -1,9 +1,8 @@
 package com.example.project.example.service;
 
-import com.example.project.error.exception.example.ExampleException;
 import com.example.project.error.exception.example.ExampleNotFindByIdException;
 import com.example.project.example.domain.Example;
-import com.example.project.example.domain.VariableTypeSelect;
+import com.example.project.example.domain.ExampleParser;
 import com.example.project.example.dto.request.ExampleDeleteRequest;
 import com.example.project.example.dto.request.ExampleRegisterRequest;
 import com.example.project.example.dto.response.ExampleResponse;
@@ -13,13 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ExampleService {
     private final ExampleRepository exampleRepository;
-    private final VariableTypeSelect variableTypeSelect;
 
     @Transactional
     public ExampleResponse exampleRegister(ExampleRegisterRequest request) {
@@ -38,23 +35,12 @@ public class ExampleService {
         return example.toResponseDto();
     }
 
-    @Transactional(readOnly = true)
-    public ExampleResponse read(Long id, Long exampleId) {
-        return exampleRepository
-                .findBySolutionId(id, exampleId)
-                .orElseThrow(ExampleException::new)
-                .toResponseDto();
+    public Example getExampleBySolutionId(Long solutionId) {
+        return exampleRepository.findBySolutionId(solutionId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 솔루션 ID에 대한 예제를 찾을 수 없습니다."));
     }
 
-    @Transactional(readOnly = true)
-    public List<ExampleResponse> readAll(Long solutionId) {
-        return exampleRepository.findAllBySolutionId(solutionId).stream()
-                .map(Example::toResponseDto)
-                .collect(Collectors.toList());
-    }
-
-    public Example getExampleById(Long id) {
-        return exampleRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid example ID: " + id));
+    public List<Object> parseInExample(String inExample) {
+        return ExampleParser.parseInExample(inExample);  // ExampleParser 사용
     }
 }
