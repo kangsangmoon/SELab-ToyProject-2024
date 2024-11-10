@@ -33,7 +33,17 @@ public class CompileService {
     }
 
     private String sendHttpRequestToCompileServer(String language, String code, List<Object> inputParams) throws IOException {
-        HttpURLConnection connection = getHttpURLConnection();
+        String COMPILE_SERVER_URL = "http://localhost:8081/compile";
+        URL url = new URL(COMPILE_SERVER_URL);
+
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json; utf-8");
+        connection.setRequestProperty("Accept", "application/json");
+        connection.setDoOutput(true);
+
+        connection.setConnectTimeout(5000);
+        connection.setReadTimeout(10000);
 
         String jsonInputString = createJsonPayload(language, code, inputParams);
 
@@ -55,21 +65,6 @@ public class CompileService {
 
             return response.toString();
         }
-    }
-
-    private static HttpURLConnection getHttpURLConnection() throws IOException {
-        String COMPILE_SERVER_URL = "http://localhost:8081/compile";
-        URL url = new URL(COMPILE_SERVER_URL);
-
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Content-Type", "application/json; utf-8");
-        connection.setRequestProperty("Accept", "application/json");
-        connection.setDoOutput(true);
-
-        connection.setConnectTimeout(5000);
-        connection.setReadTimeout(10000);
-        return connection;
     }
 
     private String createJsonPayload(String language, String code, List<Object> inputParams) {
