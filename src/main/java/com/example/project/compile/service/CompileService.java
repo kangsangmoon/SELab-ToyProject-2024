@@ -1,55 +1,84 @@
 package com.example.project.compile.service;
 
-import com.example.project.compile.domain.CompileLanguage;
-import com.example.project.error.dto.ErrorMessage;
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
-import java.nio.file.Path;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.List;
+
+import com.google.gson.Gson;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class CompileService {
-//TODO 일반적인 컴파일 오류 메시지를 어떤 오류가 발생했는지에 대한 오류메시지 작성
-    private final FileService fileService;
-    private final CommandExecutorService commandExecutorService;
 
-    @SneakyThrows
-    public String compileAndRun(String language, String code, String inputParameter) {
-        CompileLanguage compileLanguage = CompileLanguage.getLanguage(language);
-        if (compileLanguage == null) {
-            return ErrorMessage.UNSUPPORTED_LANGUAGE.getMessage();
-        }
+    private final Gson gson = new Gson();
 
-        Path filePath = null;
-        try {
-            filePath = fileService.createCodeFile(code, compileLanguage);
-            return executeCode(filePath, inputParameter);
-        } catch (InvalidPathException e) {
-            return ErrorMessage.INVALID_PATH_EXCEPTION.getMessage();
-        } catch (IOException e) {
-            return ErrorMessage.GENERAL_COMPILE_ERROR.getMessage();
-        } finally {
-            if (filePath != null) {
-                Files.deleteIfExists(filePath);
-            }
+    public String sendCodeToCompileServer(String language, String code, List<Object> inputParams, String expectedOutput) throws IOException, InterruptedException {
+        String response = sendHttpRequestToCompileServer(language, code, inputParams);
+
+        if (response.trim().equals(expectedOutput.trim())) {
+            log.info("정답 결과: {}", response);
+            return "정답입니다.";
+        } else {
+            log.warn("출력 예제: {}, 결과: {}", expectedOutput, response);
+            return "오답입니다. 출력예제: " + expectedOutput + ", 결과: " + response;
         }
     }
 
-    private String executeCode(Path filePath, String inputParameter) throws IOException {
-        String result;
-        try {
-            String command = filePath.getParent().resolve("output") + inputParameter;
-            result = commandExecutorService.runCommand(command);
-        } catch (IOException | InterruptedException e) {
-            return ErrorMessage.GENERAL_COMPILE_ERROR.getMessage();
+    private String sendHttpRequestToCompileServer(String language, String code, List<Object> inputParams) throws IOException {
+        HttpURLConnection connection = getHttpURLConnection();
+
+        String jsonInputString = createJsonPayload(language, code, inputParams);
+
+        log.debug("JSON 페이로드 생성 완료 - payload 길이: {}", jsonInputString.length());
+
+        try (var os = connection.getOutputStream()) {
+            byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+            os.write(input, 0, input.length);
+            log.debug("컴파일 서버로 데이터 전송 완료");
         }
-        return result;
+
+        try (var br = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+            StringBuilder response = new StringBuilder();
+            String responseLine;
+
+            while ((responseLine = br.readLine()) != null) {
+                response.append(responseLine.trim());
+            }
+
+            return response.toString();
+        }
+    }
+
+    private static HttpURLConnection getHttpURLConnection() throws IOException {
+        String COMPILE_SERVER_URL = "http://localhost:8081/compile";
+        URL url = new URL(COMPILE_SERVER_URL);
+
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json; utf-8");
+        connection.setRequestProperty("Accept", "application/json");
+        connection.setDoOutput(true);
+
+        connection.setConnectTimeout(5000);
+        connection.setReadTimeout(10000);
+        return connection;
+    }
+
+    private String createJsonPayload(String language, String code, List<Object> inputParams) {
+        var payloadMap = new HashMap<>();
+
+        payloadMap.put("language", language);
+        payloadMap.put("code", code);
+        payloadMap.put("inputParams", inputParams.stream().map(Object::toString).toArray(String[]::new));
+
+        return gson.toJson(payloadMap);
     }
 }
