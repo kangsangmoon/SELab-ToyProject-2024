@@ -1,16 +1,15 @@
 package com.example.project.solution.controller.ui;
 
-import com.example.project.auth.service.AuthTokenService;
-import com.example.project.auth.service.UserAuthService;
+import com.example.project.auth.token.TokenProvider;
 import com.example.project.common.util.HeaderUtil;
 import com.example.project.solution.dto.response.list.NonAuthSolutionListResponse;
 import com.example.project.solution.dto.response.list.AuthSolutionListResponse;
 import com.example.project.solution.service.UserSolutionService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -22,23 +21,22 @@ import java.util.List;
 public class SolutionListController {
 
     private final UserSolutionService userSolutionService;
-    private final UserAuthService userAuthService;
-    private final AuthTokenService authTokenService;
+    private final TokenProvider tokenProvider;
 
     @RequestMapping
     public String solutionList(
             Model model,
-            @CookieValue(value = HeaderUtil.AUTHORIZATION_HEADER, required = false) String cookie
+            HttpServletRequest request
     ) {
-        log.info("solutionList entry -> token: {}", cookie);
-        if (authTokenService.isValidateToken(cookie)) {
-            Long userIdByToken = userAuthService.getUserIdByToken(cookie);
+        log.info("solutionList entry -> token: {}", HeaderUtil.resolveToken(request));
+        if (tokenProvider.validateToken(HeaderUtil.resolveToken(request))) {
+            Long userIdByToken = tokenProvider.getUserIdByToken(HeaderUtil.resolveToken(request));
             log.info("token is validate -> user: {}", userIdByToken);
 
-            List<AuthSolutionListResponse> authSolutionListRespons = userSolutionService.getAuthSolutionList(userIdByToken);
-            log.info("solutionListResponse size: {}", authSolutionListRespons.size());
+            List<AuthSolutionListResponse> authSolutionListResponses = userSolutionService.getAuthSolutionList(userIdByToken);
+            log.info("solutionListResponse size: {}", authSolutionListResponses.size());
 
-            model.addAttribute("SolutionList", authSolutionListRespons);
+            model.addAttribute("SolutionList", authSolutionListResponses);
             return "auth/solution/solution_list";
         } else {
             log.info("token is not validate");

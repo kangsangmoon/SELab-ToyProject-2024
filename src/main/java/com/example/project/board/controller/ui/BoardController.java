@@ -1,6 +1,6 @@
 package com.example.project.board.controller.ui;
 
-import com.example.project.auth.service.AuthTokenService;
+import com.example.project.auth.token.TokenProvider;
 import com.example.project.board.dto.BoardResponse;
 import com.example.project.board.service.BoardService;
 import com.example.project.common.util.HeaderUtil;
@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
     private final BoardService boardService;
-    private final AuthTokenService authTokenService;
+    private final TokenProvider tokenProvider;
 
     @RequestMapping("/{solutionId}")
     public String boardList(
@@ -29,7 +29,7 @@ public class BoardController {
         List<BoardResponse> boardResponses = boardService.readAllBySolutionId(id);
         model.addAttribute("Boards", boardResponses);
 
-        if (authTokenService.isValidateToken(HeaderUtil.resolveToken(httpServletRequest))) {
+        if (tokenProvider.validateToken(HeaderUtil.resolveToken(httpServletRequest))) {
             return "auth/board";
         } else return "non-auth/board";
     }

@@ -1,19 +1,16 @@
 package com.example.project.user.controller.ui;
 
-import com.example.project.auth.service.AuthTokenService;
-import com.example.project.auth.service.UserAuthService;
+import com.example.project.auth.token.TokenProvider;
 import com.example.project.common.util.HeaderUtil;
+import com.example.project.redis.RedisService;
 import com.example.project.user.dto.UserResponse;
 import com.example.project.user.dto.request.UserUpdateRequest;
+import com.example.project.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
@@ -21,8 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/users/info")
 @RequiredArgsConstructor
 public class UserInfoController {
-    private final UserAuthService userAuthService;
-    private final AuthTokenService authTokenService;
+    private final TokenProvider tokenProvider;
+    private final UserService userService;
+    private final RedisService redisService;
 
     @RequestMapping
     public String info(
@@ -31,9 +29,10 @@ public class UserInfoController {
     ) {
         String token = HeaderUtil.resolveToken(httpServletRequest);
         log.info("info entry -> token: {}", token);
-        if (authTokenService.isValidateToken(token)) {
+        if (tokenProvider.validateToken(token)) {
             log.info("token is validate");
-            UserResponse userResponse = userAuthService.getUserByToken(token);
+            Long userIdByToken = redisService.getUserIdByToken(token);
+            UserResponse userResponse = userService.find(userIdByToken);
             model.addAttribute("UserInfo", userResponse);
             return "/auth/user/info";
         }
@@ -47,8 +46,9 @@ public class UserInfoController {
     ) {
         String token = HeaderUtil.resolveToken(httpServletRequest);
 
-        if (authTokenService.isValidateToken(token)) {
-            UserResponse userResponse = userAuthService.getUserByToken(token);
+        if (tokenProvider.validateToken(token)) {
+            Long userIdByToken = redisService.getUserIdByToken(token);
+            UserResponse userResponse = userService.find(userIdByToken);
             model.addAttribute("UserInfo", userResponse);
             model.addAttribute("UpdateRequest", new UserUpdateRequest());
             return "/auth/user/info";

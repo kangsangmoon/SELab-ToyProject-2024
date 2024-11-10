@@ -1,9 +1,8 @@
 package com.example.project.user.controller;
 
-import com.example.project.auth.dto.AuthTokenResponse;
-import com.example.project.auth.service.AuthTokenService;
 import com.example.project.auth.token.TokenProvider;
 import com.example.project.common.util.HeaderUtil;
+import com.example.project.redis.RedisService;
 import com.example.project.user.dto.UserResponse;
 import com.example.project.user.dto.request.UserRegisterRequest;
 import com.example.project.user.service.CookieService;
@@ -25,8 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserRegisterController {
     private final UserService userService;
     private final TokenProvider tokenProvider;
-    private final AuthTokenService authTokenService;
     private final CookieService cookieService;
+    private final RedisService redisService;
 
     @PostMapping("/signup")
     public void signup(
@@ -35,9 +34,9 @@ public class UserRegisterController {
     ) {
         UserResponse register = userService.register(userDto);
 
-        String jwt = tokenProvider.createToken(register.getId(), register.getRoleType().getRole());
-        AuthTokenResponse authTokenResponse = authTokenService.registerUserToken(register.getId(), jwt);
-        log.info("jwt token registered {}", authTokenResponse.getTokenValue());
+        String jwt = tokenProvider.createAccessToken(register.getId(), register.getRoleType().getRole());
+        redisService.saveToken(jwt, register.getId());
+        log.info("jwt token registered {}", jwt);
 
         httpServletResponse.setStatus(HttpStatus.OK.value());
         httpServletResponse.setHeader(HeaderUtil.AUTHORIZATION_HEADER, jwt);

@@ -1,11 +1,21 @@
 spring:
+
+  data:
+    redis:
+      port: 6397
+      host: localhost
+      repositories:
+        enabled: false
+
   sql:
     init:
       mode: always  # 매번 data.sql을 실행하도록 한다
+
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+
   datasource:
     url: jdbc:mysql://code-for-code-rds.c38u2e64od9k.ap-northeast-2.rds.amazonaws.com:3306/quiz_db
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -14,6 +24,7 @@ spring:
     hikari:
       minimum-idle: 10
       maximum-pool-size: 20
+
   jpa:
     open-in-view: false
     hibernate:
@@ -21,13 +32,28 @@ spring:
     generate-ddl: true  # JPA에서 DDL을 생성하도록 설정함  실제 운영에서 false로 변경해야함
     show-sql: true # 실행 창에서 SQL을 보여주도록 설정함
     defer-datasource-initialization: true # data.sql을 시작할 때 실행하도록 한다
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
   h2:
     console:
       enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html # 스웨거 접근 경로
+  api-docs:
+    path: /api-docs # openAPI 접근 경로. default 값은 /v3/api-docs 이다.
+  show-actuator: true # Spring Actuator의 endpoint까지 보여줄 것인지?
+  default-consumes-media-type: application/json # request media type 의 기본 값
+  default-produces-media-type: application/json # response media type 의 기본 값
+  paths-to-match: # 해당 패턴에 매칭되는 controller만 swagger-ui에 노출한다.
+    - /api/v1/**
+
 server:
+
   tomcat:
     threads:
       max: 200 # 생성할 수 있는 thread의 총 개수
@@ -35,10 +61,12 @@ server:
     max-connections: 8192 # 수립가능한 connection의 총 개수
     accept-count: 100 # 작업큐의 사이즈
     connection-timeout: 20000 # timeout 판단 기준 시간, 20초
+
   port: 8080 # 서버를 띄울 포트번호
   servlet:
     session:
       timeout: 5m #테스트 편의성을 위해 1분으로 설정
+
 
 jwt:
   header: code-for-code-auth
@@ -46,5 +74,7 @@ jwt:
   #echo 'silvernine-tech-spring-boot-jwt-tutorial-secret-silvernine-tech-spring-boot-jwt-tutorial-secret'|base64
   secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK # 나중에 바꿔야함
   token-validity-in-seconds: 86400
+
+
 compile:
   url: /home/ubuntu/code/

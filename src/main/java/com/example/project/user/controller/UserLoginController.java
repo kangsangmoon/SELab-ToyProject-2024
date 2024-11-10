@@ -1,10 +1,13 @@
 package com.example.project.user.controller;
 
-import com.example.project.auth.service.AuthTokenService;
+import com.example.project.auth.token.TokenProvider;
 import com.example.project.common.util.HeaderUtil;
+import com.example.project.redis.RedisService;
+import com.example.project.user.dto.UserResponse;
 import com.example.project.user.dto.login.LoginRequest;
 import com.example.project.user.service.CookieService;
 import com.example.project.user.service.LoginService;
+import com.example.project.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,20 +21,30 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserLoginController {
     private final LoginService loginService;
-    private final AuthTokenService authTokenService;
     private final CookieService cookieService;
+    private final TokenProvider tokenProvider;
+    private final RedisService redisService;
+    private final UserService userService;
 
     @PostMapping("/login")
     public void login(
             @RequestBody LoginRequest loginRequest,
-            HttpServletResponse httpServletResponse
+            HttpServletResponse httpServletResponse,
+            HttpServletRequest httpServletRequest
     ) {
         log.info("jwtAuthLogin {}, {}", loginRequest.getUserId(), loginRequest.getPassword());
 
         try {
+            //TODO RefeshToken 사용하도록 수정
+            Long userIdByToken = redisService.getUserIdByToken(HeaderUtil.resolveToken(httpServletRequest));
+            String jwt = "";
 
-            String jwt = loginService.userLogin(loginRequest.getUserId(), loginRequest.getPassword());
-            log.info("authrize jwt {}", jwt);
+            if(userIdByToken == null) {
+                UserResponse userResponse = loginService.userLogin(loginRequest.getUserId(), loginRequest.getPassword());
+                String accessToken = tokenProvider.createAccessToken(userResponse.getId(), userResponse.getRoleType().getRole());
+                log.info("authrize jwt {}", accessToken);
+                jwt = accessToken;
+            }else jwt = HeaderUtil.resolveToken(httpServletRequest);
 
             httpServletResponse.setHeader(HeaderUtil.AUTHORIZATION_HEADER, jwt);
             httpServletResponse.addCookie(cookieService.createJWTCookie(jwt));
@@ -48,8 +61,8 @@ public class UserLoginController {
         String token = request.getHeader(HeaderUtil.AUTHORIZATION_HEADER);
         log.info("token login tryed {}", token);
 
-        if (authTokenService.isValidateToken(token)) {
-            Long userIdByToken = authTokenService.getUserIdByToken(token);
+        if (tokenProvider.validateToken(token)) {
+            Long userIdByToken = redisService.getUserIdByToken(token);
             log.info("Login {}", userIdByToken);
             response.addCookie(cookieService.createJWTCookie(token));
             response.setStatus(HttpStatus.OK.value());

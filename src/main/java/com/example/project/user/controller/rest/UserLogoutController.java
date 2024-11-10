@@ -1,7 +1,8 @@
 package com.example.project.user.controller.rest;
 
-import com.example.project.auth.service.AuthTokenService;
+import com.example.project.auth.token.TokenProvider;
 import com.example.project.common.util.HeaderUtil;
+import com.example.project.redis.RedisService;
 import com.example.project.user.service.CookieService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,16 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
 public class UserLogoutController {
-    private final AuthTokenService authTokenService;
-    private final CookieService cookieService;
+    private final TokenProvider tokenProvider;
+    private final RedisService redisService;
 
     @DeleteMapping("/logout")
     public void logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         String token = HeaderUtil.resolveToken(httpServletRequest);
 
-        if (authTokenService.isValidateToken(token)) {
-            authTokenService.deleteToken(token);
-            httpServletResponse.addCookie(cookieService.deleteCookie());
+        if (tokenProvider.validateToken(token)) {
+            redisService.deleteToken(token);
             httpServletResponse.setStatus(HttpStatus.NO_CONTENT.value());
         } else {
             httpServletResponse.setStatus(HttpStatus.BAD_REQUEST.value());

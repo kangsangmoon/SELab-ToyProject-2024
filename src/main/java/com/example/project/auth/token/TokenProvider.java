@@ -1,6 +1,7 @@
 package com.example.project.auth.token;
 
 import com.example.project.common.util.DateUtil;
+import com.example.project.redis.RedisService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -25,13 +27,15 @@ public class TokenProvider implements InitializingBean {
     private static final String AUTHORITIES_KEY = "role";
     private final String secret;
     private final long tokenValidityInMilliseconds;
+    private final RedisService redisService;
     private Key key;
 
     public TokenProvider(
             @Value("${jwt.secret}") String secret,
-            @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
+            @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds, RedisService redisService) {
         this.secret = secret;
         this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
+        this.redisService = redisService;
     }
 
     @Override
@@ -40,7 +44,7 @@ public class TokenProvider implements InitializingBean {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(Long id, String role) {
+    public String createAccessToken(Long id, String role) {
         return Jwts.builder()
                 .setClaims(createClaims(id, role))
                 .setIssuedAt(DateUtil.getDate())
@@ -48,6 +52,22 @@ public class TokenProvider implements InitializingBean {
                 .setExpiration(DateUtil.getTokenValidTime(DateUtil.getDate(), tokenValidityInMilliseconds))
                 //.setIssuer("/localhost:8080")
                 .compact();
+    }
+
+    public String createRefreshToken(Long id, String role){
+        Date now = new Date();
+        Date expireDate = new Date(now.getTime() + tokenValidityInMilliseconds);
+
+        String token = Jwts.builder()
+                .setClaims(createClaims(id, role))
+                .setIssuedAt(now)
+                .setExpiration(expireDate)
+                .signWith(SignatureAlgorithm.HS256, key)
+                .compact();
+
+        redisService.saveToken(token, id);
+
+        return token;
     }
 
     /**
@@ -59,7 +79,6 @@ public class TokenProvider implements InitializingBean {
         var claims = Jwts.claims().setSubject("Code-For-Code");
         claims.put("userId", id);                                            //Long id : user의 PK
         claims.put(AUTHORITIES_KEY, role);
-        claims.put("random", Math.random() * 1000);
 
         return claims;
     }
@@ -91,7 +110,7 @@ public class TokenProvider implements InitializingBean {
      * @return * Long userId
      * @brief * 토큰 파싱 (해석) / jjwt 라이브러리
      */
-    public Long getUserToken(String token) {
+    public Long getUserIdByToken(String token) {
         var data = Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token)

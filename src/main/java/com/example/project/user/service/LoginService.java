@@ -1,7 +1,5 @@
 package com.example.project.user.service;
 
-import com.example.project.auth.service.AuthTokenService;
-import com.example.project.error.dto.ErrorMessage;
 import com.example.project.error.exception.user.InvalidLoginUserIdException;
 import com.example.project.error.exception.user.InvalidLoginPasswordException;
 import com.example.project.auth.token.TokenProvider;
@@ -21,7 +19,7 @@ public class LoginService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
-    private final AuthTokenService authTokenService;
+
 
     @Transactional(readOnly = true)
     public UserResponse login(String id, String password) {
@@ -35,7 +33,7 @@ public class LoginService {
     }
 
     @Transactional
-    public String userLogin(String id, String password) {
+    public UserResponse userLogin(String id, String password) {
         User user = userRepository
                 .findByUserId(id)
                 .orElseThrow(InvalidLoginUserIdException::new);
@@ -44,10 +42,6 @@ public class LoginService {
             throw new InvalidLoginPasswordException();
         }
 
-        String token = tokenProvider.createToken(user.getId(), user.getRoleType().getRole());
-
-        authTokenService.registerUserToken(user.getId(), token);
-
-        return token;
+        return user.toResponseDto();
     }
 }
